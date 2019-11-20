@@ -1945,9 +1945,6 @@
         </child>
         <child>
           <object class="ttk.Entry" id="D_Entry">
-            <property name="validate">all</property>
-            <property name="validatecommand">validateFloat</property>
-            <property name="validatecommand_args">%P %s</property>
             <layout>
               <property name="column">0</property>
               <property name="propagate">True</property>
