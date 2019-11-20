@@ -45,7 +45,7 @@ stepsize = -1
 stepsperangle = -1
 measurementstotal = -1
 time = -1
-d = 2.01*10**-10
+d = -1
 
 do_plot = False
 do_lambda = False
@@ -142,34 +142,59 @@ class MyApplication():
             self.d_dialog = dialog
             
             def dialog_btnclose_clicked():
-                config["Crystal"]["d"] = self.builder.get_object("D_Entry").get()
-                d = float(config["Crystal"]["d"])
+                try:
+                    config["Crystal"]["d"] = self.builder.get_object("D_Entry").get()
+                except KeyError:
+                    config["Crystal"] = {}
+                    config["Crystal"]["d"] = self.builder.get_object("D_Entry").get()
+                d = abs(float(config["Crystal"]["d"]))
                 dialog.close()
 
-            def validateFloat(self, value_new, value_old):
+            def validateFloat(value_new, value_old):
                 allowed = False
                 try:
                     float(value_new)
-                    self.builder.get_object(btnclose).config(state="normal")
+                    btnclose.config(state="normal")
                     allowed = True
                 except ValueError:
-                    self.builder.get_object(btnclose).config(state="disabled")
                     try:
                         float(value_old)
+                        btnclose.config(state="normal")
                         allowed = False
                     except ValueError:
+                        btnclose.config(state="disabled")
+                    if len(value_new) < len(value_old):
+                        btnclose.config(state="disabled")
                         allowed = True
-                    if value_new == "":
-                        allowed = True
+                    if value_new[-1:] == "e":
+                        try:
+                            float(value_new[:-1])
+                            btnclose.config(state="disabled")
+                            allowed = True
+                        except ValueError:
+                            pass
+                    elif value_new[-2:] == "e-" or value_new[-2:] == "e+":
+                        try:
+                            float(value_new[:-2])
+                            btnclose.config(state="disabled")
+                            allowed = True
+                        except ValueError:
+                            pass
                 return allowed
 
-            self.builder.get_object("D_Entry").delete(0, tk.END)
-            self.builder.get_object("D_Entry").insert(0, "{:0.3e}".format(d))
+            entry_d = self.builder.get_object("D_Entry")
+            entry_d.delete(0, tk.END)
+            entry_d.insert(0, "{:0.3e}".format(d))
+            entry_d["validatecommand"] = (entry_d.register(validateFloat), "%P", "%s")
+            entry_d["validate"] = "key"
             btnclose = self.builder.get_object("Set_D_Button")
             btnclose["command"] = dialog_btnclose_clicked
             
             dialog.run()
         else:
+            entry_d = self.builder.get_object("D_Entry")
+            entry_d.delete(0, tk.END)
+            entry_d.insert(0, "{:0.3e}".format(d))
             self.d_dialog.show()
 
     def on_resetmax_clicked(self):
