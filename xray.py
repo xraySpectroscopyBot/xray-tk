@@ -220,10 +220,11 @@ class MyApplication():
     
     def btn_ok1_clicked(self):
         serial_selected = None
+        selection_string = self.builder.get_object('SerialCombo').current()
         for s in comports():
-            if s.device == self.builder.get_object('SerialCombo').current():
+            if s.device == selection_string:
                 serial_selected = s
-        if s and serial_selected.vid and serial_selected.pid:
+        if serial_selected and serial_selected.vid and serial_selected.pid:
             config["Serial"] = {}
             config["Serial"]["vid"] = str(serial_selected.vid)
             config["Serial"]["pid"] = str(serial_selected.pid)
@@ -244,13 +245,16 @@ class MyApplication():
             pass
         self.pages["SetMax"].tkraise()
     def btn_ok4_clicked(self):
-        serialWrite(b'{"command":"position"}')
-        data = json.loads(serialRead())
-        config["Stepper"] = {}
-        config["Stepper"]["maximum"] = str(data["position"])	
-        config["Stepper"]["angle"] = self.builder.get_object('MaxAngle').get()
-        cmd = '{"command":"goto", "steps":' + str(-int(config["Stepper"]["maximum"])) + ', "velocity":"2000"}'
-        serialWrite(cmd.encode("utf-8"))
+        try:
+            serialWrite(b'{"command":"position"}')
+            data = json.loads(serialRead())
+            config["Stepper"] = {}
+            config["Stepper"]["maximum"] = str(data["position"])	
+            config["Stepper"]["angle"] = self.builder.get_object('MaxAngle').get()
+            cmd = '{"command":"goto", "steps":' + str(-int(config["Stepper"]["maximum"])) + ', "velocity":"2000"}'
+            serialWrite(cmd.encode("utf-8"))
+        except json.decoder.JSONDecodeError:
+            pass
         self.pages["SetParams"].tkraise()
     def btn_ok5_clicked(self):
         self.pages["Measure"].tkraise()
@@ -275,10 +279,13 @@ class MyApplication():
             counts.append(int(countsentry.get()))
             countsentry.delete(0, tk.END)
             self.builder.get_object("btn_ok_measure").config(state="disabled")
-            serialWrite(b'{"command":"position"}')
-            data = json.loads(serialRead())
-            cmd = '{"command":"goto", "steps":' + str(-data["position"]) + ', "velocity":"2000"}'
-            serialWrite(cmd.encode("utf-8"))
+            try:
+                serialWrite(b'{"command":"position"}')
+                data = json.loads(serialRead())
+                cmd = '{"command":"goto", "steps":' + str(-data["position"]) + ', "velocity":"2000"}'
+                serialWrite(cmd.encode("utf-8"))
+            except json.decoder.JSONDecodeError:
+                pass
             self.pages["Save"].tkraise()
     def btn_ok7_clicked(self):
         self.pages["Measure"].tkraise()
@@ -539,7 +546,7 @@ def serialRead():
     try:
         return ser.readline().decode("utf-8")
     except serial.SerialException:
-        return "0"
+        return ""
 
 def resetHints(self):
     self.builder.get_object('hint_label_measure').config(text="Hintergrundstrahlung messen.")
@@ -673,6 +680,8 @@ def setSerialPort(self):
             if str(s.vid) == config["Serial"]["vid"]:
                 if str(s.pid) == config["Serial"]["pid"]:
                     self.builder.get_object('SerialCombo').current(s.device)
+                    return
+        self.builder.get_object('ErrorLabelSerial').config(text="Achtung: gespeicherter Arduino nicht gefunden!")
     except KeyError:
         pass
 
