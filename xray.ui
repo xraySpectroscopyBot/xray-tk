@@ -2001,7 +2001,9 @@
         </layout>
         <child>
           <object class="ttk.Label" id="About_Text">
+            <property name="justify">center</property>
             <property name="text" translatable="yes">Falk Rehse
+https://github.com/xraySpectroscopyBot/xray-tk
  </property>
             <layout>
               <property name="column">0</property>
