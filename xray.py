@@ -634,25 +634,38 @@ def iconizePlotButtons(self):
         self.builder.get_object("btn_plot_6").config(image=self.img_dont_zoom)
 
 def calculateParameters(self):
+    btn_ok = self.builder.get_object("btn_ok_parameters")
     try:
         global startsteps, stepsize, stepsperangle, measurementstotal, time
-        stepangle = float(self.builder.get_object('StepsizeEntry').get())
-        time = float(self.builder.get_object('TimeEntry').get())
-        startangle = float(self.builder.get_object('StartangleEntry').get())
-        endangle = float(self.builder.get_object('EndangleEntry').get())
+        stepangle = abs(float(self.builder.get_object('StepsizeEntry').get()))
+        time = abs(float(self.builder.get_object('TimeEntry').get()))
+        startangle = abs(float(self.builder.get_object('StartangleEntry').get()))
+        endangle = abs(float(self.builder.get_object('EndangleEntry').get()))
 
-        stepsperangle = abs(int(config["Stepper"]["maximum"])) // abs(float(config["Stepper"]["angle"]))
-        stepsize = stepsperangle * stepangle
-        startsteps = stepsperangle * startangle
-        stepstotal = stepsperangle * abs(endangle - startangle)
-        measurementstotal = stepstotal // stepsize
-        timetotal = measurementstotal * time
-        config["Parameters"] = {"stepangle": str(stepangle), "time": str(time), "startangle": str(startangle), "endangle": str(endangle)}
-        self.builder.get_object('N_Measurements').config(text="Messungen: " + str(measurementstotal))
-        self.builder.get_object('TimeTotal').config(text="Zeit: " + str(timetotal) + "s")
-        self.builder.get_object("btn_ok_parameters").config(state="normal")
+        try:
+            maximum = abs(int(config["Stepper"]["maximum"]))
+            angle = abs(float(config["Stepper"]["angle"]))
+        except KeyError:
+            maximum = 0
+            angle = 1
+        if startangle >= 0 and endangle >= startangle and endangle <= angle and stepangle > 0 and stepangle <= endangle - startangle and time > 0:
+            stepsperangle = maximum // angle
+            stepsize = stepsperangle * stepangle
+            startsteps = stepsperangle * startangle
+            stepstotal = stepsperangle * abs(endangle - startangle)
+            try:
+                measurementstotal = stepstotal // stepsize
+            except ZeroDivisionError:
+                measurementstotal = 0
+            timetotal = measurementstotal * time
+            config["Parameters"] = {"stepangle": str(stepangle), "time": str(time), "startangle": str(startangle), "endangle": str(endangle)}
+            self.builder.get_object('N_Measurements').config(text="Messungen: " + str(measurementstotal))
+            self.builder.get_object('TimeTotal').config(text="Zeit: " + str(timetotal) + "s")
+            btn_ok.config(state="normal")
+        else:
+            btn_ok.config(state="disabled")
     except ValueError:
-        self.builder.get_object("btn_ok_parameters").config(state="disabled")
+        btn_ok.config(state="disabled")
 
 def loadRecentParamters(self):
     try:
