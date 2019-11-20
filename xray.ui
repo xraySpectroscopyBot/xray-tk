@@ -714,7 +714,7 @@
               </object>
             </child>
             <child>
-              <object class="ttk.Frame" id="Spacer_1_1">
+              <object class="ttk.Frame" id="Spacer_2">
                 <property name="width">15</property>
                 <layout>
                   <property name="column">1</property>
