@@ -199,10 +199,23 @@ class MyApplication():
 
     def on_resetmax_clicked(self):
         config["Stepper"] = {}
+        resetHints(self)
         self.pages["ChooseSerial"].tkraise()
 
     def on_reset_clicked(self):
+        global config
+        global do_plot, do_lambda, do_persecond, do_subtractbackground, do_smooth, do_zoom
+        os.remove(path + "/xray.ini")
         config = configparser.ConfigParser()
+        config.read(path + "/xray.ini")
+        resetHints(self)
+        resetParameters(self)
+        do_plot = False
+        do_lambda = False
+        do_persecond = False
+        do_subtractbackground = False
+        do_smooth = False
+        do_zoom = False
         self.pages["ChooseSerial"].tkraise()
     
     def btn_ok1_clicked(self):
@@ -533,7 +546,16 @@ def resetHints(self):
     self.builder.get_object('ErrorLabelLoad').config(text="")
     self.builder.get_object('ErrorLabelSerial').config(text="")
     self.builder.get_object("hint_label_save").config(text="Messergebnisse speichern.")
-    updateSerialCombo(self)
+    setSerialPort(self)
+    self.builder.get_object('MaxAngle').delete(0, tk.END)
+
+def resetParameters(self):
+    #self.builder.get_object('loaddatapath').cget("path")
+    #self.builder.get_object("pathchooserinput").cget("path")
+    self.builder.get_object('StepsizeEntry').delete(0, tk.END)
+    self.builder.get_object('TimeEntry').delete(0, tk.END)
+    self.builder.get_object('StartangleEntry').delete(0, tk.END)
+    self.builder.get_object('EndangleEntry').delete(0, tk.END)
 
 def updateSerialCombo(self):
     ports = []
