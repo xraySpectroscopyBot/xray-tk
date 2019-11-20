@@ -503,40 +503,50 @@ class MyApplication():
         calculateParameters(self)
 
     def validateFloat(self, value_new, value_old, btn = None):
+        if btn:
+            btn_obj = self.builder.get_object(btn)
         allowed = False
         try:
             float(value_new)
             if btn:
-                self.builder.get_object(btn).config(state="normal")
+                btn_obj.config(state="normal")
             allowed = True
         except ValueError:
-            if btn:
-                self.builder.get_object(btn).config(state="disabled")
             try:
                 float(value_old)
+                if btn:
+                    btn_obj.config(state="normal")
                 allowed = False
             except ValueError:
-                allowed = True
-            if value_new == "":
+                if btn:
+                    btn_obj.config(state="disabled")
+            if len(value_new) < len(value_old):
+                if btn:
+                    btn_obj.config(state="disabled")
                 allowed = True
         return allowed
 
     def validateInt(self, value_new, value_old, btn = None):
+        if btn:
+            btn_obj = self.builder.get_object(btn)
         allowed = False
         try:
             int(value_new)
             if btn:
-                self.builder.get_object(btn).config(state="normal")
+                btn_obj.config(state="normal")
             allowed = True
         except ValueError:
-            if btn:
-                self.builder.get_object(btn).config(state="disabled")
             try:
                 int(value_old)
+                if btn:
+                    btn_obj.config(state="normal")
                 allowed = False
             except ValueError:
-                allowed = True
-            if value_new == "":
+                if btn:
+                    btn_obj.config(state="disabled")
+            if len(value_new) < len(value_old):
+                if btn:
+                    btn_obj.config(state="disabled")
                 allowed = True
         return allowed
 
