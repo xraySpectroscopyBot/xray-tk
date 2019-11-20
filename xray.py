@@ -259,11 +259,10 @@ class MyApplication():
     def btn_ok5_clicked(self):
         self.builder.get_object("btn_ok_parameters").config(state="disabled")
         self.pages["Measure"].tkraise()
-
     def btn_ok6_clicked(self):
         countsentry = self.builder.get_object('CountsEntry')
         if len(counts) == 0:
-            counts.append(int(countsentry.get()))
+            counts.append(abs(int(countsentry.get())))
             countsentry.delete(0, tk.END)
             self.builder.get_object("btn_ok_measure").config(state="disabled")
             cmd = '{"command":"goto", "steps":' + str(startsteps) + ', "velocity":"2000"}'
@@ -271,13 +270,13 @@ class MyApplication():
             self.pages["TurnOn"].tkraise()
             self.builder.get_object('hint_label_measure').config(text="Messung durchführen.")
         elif len(counts) < measurementstotal:
-            counts.append(int(countsentry.get()))
+            counts.append(abs(int(countsentry.get())))
             countsentry.delete(0, tk.END)
             self.builder.get_object("btn_ok_measure").config(state="disabled")
             cmd = '{"command":"goto", "steps":' + str(stepsize) + ', "velocity":"2000"}'
             serialWrite(cmd.encode("utf-8"))
         else:
-            counts.append(int(countsentry.get()))
+            counts.append(abs(int(countsentry.get())))
             countsentry.delete(0, tk.END)
             self.builder.get_object("btn_ok_measure").config(state="disabled")
             try:
@@ -368,26 +367,29 @@ class MyApplication():
         success = False
         try:
             try:
-                try: 
-                    loadfile = configparser.ConfigParser()
-                    loadfile.read(filepath)
-                    stepsize = float(loadfile["Parameters"]["stepsize"])
-                    time = float(loadfile["Parameters"]["time"])
-                    startsteps = float(loadfile["Parameters"]["startsteps"])
-                    stepsperangle = float(loadfile["Parameters"]["stepsperangle"])
-                    d = float(loadfile["Parameters"]["d"])
-                    config["Crystal"]["d"] = loadfile["Parameters"]["d"]
-                    counts = json.loads(loadfile["Data"]["counts"])
+                try:
+                    try: 
+                        loadfile = configparser.ConfigParser()
+                        loadfile.read(filepath)
+                        stepsize = float(loadfile["Parameters"]["stepsize"])
+                        time = float(loadfile["Parameters"]["time"])
+                        startsteps = float(loadfile["Parameters"]["startsteps"])
+                        stepsperangle = float(loadfile["Parameters"]["stepsperangle"])
+                        d = float(loadfile["Parameters"]["d"])
+                        config["Crystal"]["d"] = loadfile["Parameters"]["d"]
+                        counts = json.loads(loadfile["Data"]["counts"])
 
-                    self.builder.get_object('ErrorLabelLoad').config(text="")
-                    self.builder.get_object("btn_show_table").config(state="normal")
-                    success = True
-                except KeyError:
+                        self.builder.get_object('ErrorLabelLoad').config(text="")
+                        self.builder.get_object("btn_show_table").config(state="normal")
+                        success = True
+                    except KeyError:
+                        pass
+                except ValueError:
                     pass
-            except ValueError:
+            except configparser.Error:
                 pass
-        except configparser.Error:
-            pass
+        except json.decoder.JSONDecodeError:
+                pass
         if not success:
             self.builder.get_object('ErrorLabelLoad').config(text="Achtung: Datei konnte nicht gelesen werden.")
             self.builder.get_object("btn_show_table").config(state="disabled")
