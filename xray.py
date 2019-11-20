@@ -687,18 +687,20 @@ def loadRecentParamters(self):
         pass
 
 def loadConstants(self):
+    global d
     success = False
     try:
         try:
             d = float(config["Crystal"]["d"])
+            success = True
         except KeyError:
             pass
     except ValueError:
         pass
     if not success:
         config["Crystal"] = {}
-        d = str(2.01*10**-10)
-        config["Crystal"]["d"] = d
+        d = 201.4e-12
+        config["Crystal"]["d"] = str(d)
 
 def setSerialPort(self):
     updateSerialCombo(self)
