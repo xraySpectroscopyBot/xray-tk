@@ -257,6 +257,7 @@ class MyApplication():
             pass
         self.pages["SetParams"].tkraise()
     def btn_ok5_clicked(self):
+        self.builder.get_object("btn_ok_parameters").config(state="disabled")
         self.pages["Measure"].tkraise()
 
     def btn_ok6_clicked(self):
@@ -329,6 +330,7 @@ class MyApplication():
                 self.pages["Table"].tkraise()
 
     def btn_show_table(self):
+        self.builder.get_object("btn_show_table").config(state="disabled")
         self.pages["Table"].tkraise()
         drawTable(self)
 
