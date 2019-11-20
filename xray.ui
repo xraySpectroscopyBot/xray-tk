@@ -828,6 +828,7 @@
             <child>
               <object class="ttk.Button" id="btn_ok_4">
                 <property name="command">btn_ok4_clicked</property>
+                <property name="state">disabled</property>
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
