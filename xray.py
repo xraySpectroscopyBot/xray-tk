@@ -19,11 +19,14 @@ import csv
 from svg import Parser, Rasterizer, SVG
 from PIL import Image, ImageTk
 
-
 try:
-    path = os.path.abspath(os.path.dirname(__file__))
-except NameError:
-    path = os.path.dirname(os.path.abspath(sys.argv[0]))
+    path = sys._MEIPASS
+except Exception:
+    try:
+        path = os.path.abspath(os.path.dirname(__file__))
+    except NameError:
+        path = os.path.dirname(os.path.abspath(sys.argv[0]))
+
 
 imgpath = os.path.join(path, 'images')
 
