@@ -44,7 +44,7 @@ startsteps = -1
 stepsize = -1
 stepsperangle = -1
 measurementstotal = -1
-time = -1
+measure_time = -1
 d = -1
 
 do_plot = False
@@ -55,6 +55,8 @@ do_smooth = False
 do_zoom = False
 
 saving = False
+
+time_start = 0
 
 class MyApplication():
 
@@ -298,7 +300,7 @@ class MyApplication():
             savefile.read(filepath)
             savefile["Parameters"] = {}
             savefile["Parameters"]["stepsize"] = str(stepsize)
-            savefile["Parameters"]["time"] = str(time)
+            savefile["Parameters"]["time"] = str(measure_time)
             savefile["Parameters"]["startsteps"] = str(startsteps)
             savefile["Parameters"]["stepsperangle"] = str(stepsperangle)
             savefile["Parameters"]["d"] = config["Crystal"]["d"]
@@ -327,6 +329,11 @@ class MyApplication():
                 else:
                     drawTable(self, filepath + ".csv")
                 self.pages["Table"].tkraise()
+
+    def btn_stopwatch_start(self):
+        global time_start
+        time_start = time.time()
+        stopwatch_update(self)
 
     def btn_show_table(self):
         self.builder.get_object("btn_show_table").config(state="disabled")
@@ -362,7 +369,7 @@ class MyApplication():
             updateSerialCombo(self)
 
     def loadpath_selected(self, event=None):
-        global stepsize, time, startsteps, stepsperangle, d, counts
+        global stepsize, measure_time, startsteps, stepsperangle, d, counts
         filepath = self.builder.get_object('loaddatapath').cget("path")
         success = False
         try:
@@ -372,7 +379,7 @@ class MyApplication():
                         loadfile = configparser.ConfigParser()
                         loadfile.read(filepath)
                         stepsize = float(loadfile["Parameters"]["stepsize"])
-                        time = float(loadfile["Parameters"]["time"])
+                        measure_time = float(loadfile["Parameters"]["time"])
                         startsteps = float(loadfile["Parameters"]["startsteps"])
                         stepsperangle = float(loadfile["Parameters"]["stepsperangle"])
                         d = float(loadfile["Parameters"]["d"])
@@ -562,6 +569,13 @@ def serialRead():
     except serial.SerialException:
         return ""
 
+def stopwatch_update(self):
+    if measure_time - (time.time() - time_start) > 0:
+        self.builder.get_object("TimeLabel").config(text=str(round(measure_time - (time.time() - time_start), 1)))
+        self.mainwindow.after(0, stopwatch_update, self)
+    else:
+        self.builder.get_object("TimeLabel").config(text="0")
+
 def resetHints(self):
     self.builder.get_object('hint_label_measure').config(text="Hintergrundstrahlung messen.")
     self.builder.get_object('ErrorLabelLoad').config(text="")
@@ -636,9 +650,9 @@ def iconizePlotButtons(self):
 def calculateParameters(self):
     btn_ok = self.builder.get_object("btn_ok_parameters")
     try:
-        global startsteps, stepsize, stepsperangle, measurementstotal, time
+        global startsteps, stepsize, stepsperangle, measurementstotal, measure_time
         stepangle = abs(float(self.builder.get_object('StepsizeEntry').get()))
-        time = abs(float(self.builder.get_object('TimeEntry').get()))
+        measure_time = abs(float(self.builder.get_object('TimeEntry').get()))
         startangle = abs(float(self.builder.get_object('StartangleEntry').get()))
         endangle = abs(float(self.builder.get_object('EndangleEntry').get()))
 
@@ -648,7 +662,7 @@ def calculateParameters(self):
         except KeyError:
             maximum = 0
             angle = 1
-        if startangle >= 0 and endangle >= startangle and endangle <= angle and stepangle > 0 and stepangle <= endangle - startangle and time > 0:
+        if startangle >= 0 and endangle >= startangle and endangle <= angle and stepangle > 0 and stepangle <= endangle - startangle and measure_time > 0:
             stepsperangle = maximum // angle
             stepsize = stepsperangle * stepangle
             startsteps = stepsperangle * startangle
@@ -657,8 +671,8 @@ def calculateParameters(self):
                 measurementstotal = stepstotal // stepsize
             except ZeroDivisionError:
                 measurementstotal = 0
-            timetotal = measurementstotal * time
-            config["Parameters"] = {"stepangle": str(stepangle), "time": str(time), "startangle": str(startangle), "endangle": str(endangle)}
+            timetotal = measurementstotal * measure_time
+            config["Parameters"] = {"stepangle": str(stepangle), "time": str(measure_time), "startangle": str(startangle), "endangle": str(endangle)}
             self.builder.get_object('N_Measurements').config(text="Messungen: " + str(measurementstotal))
             self.builder.get_object('TimeTotal').config(text="Zeit: " + str(timetotal) + "s")
             btn_ok.config(state="normal")
@@ -671,12 +685,12 @@ def loadRecentParamters(self):
     try:
         try:
             stepangle = float(config["Parameters"]["stepangle"])
-            time = float(config["Parameters"]["time"])
+            measure_time = float(config["Parameters"]["time"])
             startangle = float(config["Parameters"]["startangle"])
             endangle = float(config["Parameters"]["endangle"])
 
             self.builder.get_object('StepsizeEntry').insert(0, str(stepangle))
-            self.builder.get_object('TimeEntry').insert(0, str(time))
+            self.builder.get_object('TimeEntry').insert(0, str(measure_time))
             self.builder.get_object('StartangleEntry').insert(0, str(startangle))
             self.builder.get_object('EndangleEntry').insert(0, str(endangle))
 
@@ -739,7 +753,7 @@ def calculateValues(self):
         if do_subtractbackground:
             counts_normalized[i - 1] = counts_normalized[i - 1] - background
         if do_persecond:
-            counts_normalized[i - 1] = counts_normalized[i - 1] / time
+            counts_normalized[i - 1] = counts_normalized[i - 1] / measure_time
     y = counts_normalized
 
     if do_smooth:
@@ -778,10 +792,10 @@ def drawTable(self, filename = ""):
     if do_persecond:
         self.builder.get_object('y_label').config(text="Zählrahte in 1/s" + back)
     else:
-        self.builder.get_object('y_label').config(text="Zählrahte in 1/" + str(time) + "s" + back)
+        self.builder.get_object('y_label').config(text="Zählrahte in 1/" + str(measure_time) + "s" + back)
 
     self.builder.get_object('D_Label').config(text="d = {:0.3e}".format(d))
-    self.builder.get_object('Background_Label').config(text="Hintergrundstrahlung: " + str(counts[0]) + " / " + str(time) + "s")
+    self.builder.get_object('Background_Label').config(text="Hintergrundstrahlung: " + str(counts[0]) + " / " + str(measure_time) + "s")
 
     if filename != "":
         with open(filename, "w", newline="") as csvfile:
@@ -814,7 +828,7 @@ def drawPlot(self, filename = ""):
     if do_persecond:
         axis.set_ylabel("Zählrahte in 1/s")
     else:
-        axis.set_ylabel("Zählrahte in 1/" + str(time) + "s")
+        axis.set_ylabel("Zählrahte in 1/" + str(measure_time) + "s")
     axis.set_title("Röntgenspektrum")
     canvas = FigureCanvas(figure, master=scrolledframe)
     canvas.draw()
@@ -825,4 +839,4 @@ def drawPlot(self, filename = ""):
 
 if __name__ == '__main__':
     app = MyApplication()
-    app.run();
+    app.run()
