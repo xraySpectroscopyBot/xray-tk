@@ -30,7 +30,7 @@ except NameError:
         path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
-imgpath = os.path.join(path, 'images')
+imgpath = os.path.join(path, "images")
 
 config = configparser.ConfigParser()
 config.read(path + "/xray.ini")
@@ -67,24 +67,24 @@ class MyApplication():
         self.d_dialog = None
 
         self.builder = b = pygubu.Builder()
-        b.add_from_file(os.path.join(path, 'xray.ui'))
+        b.add_from_file(os.path.join(path, "xray.ui"))
 
-        self.mainwindow = b.get_object('Mainwindow_1')
+        self.mainwindow = b.get_object("Mainwindow_1")
 
-        self.mainmenu = menu = b.get_object('mainmenu', self.mainwindow)
+        self.mainmenu = menu = b.get_object("mainmenu", self.mainwindow)
         self.mainwindow.config(menu=menu)
 
         self.pages = {}
-        self.pages["ChooseSerial"] = b.get_object('mw1_frame')
-        self.pages["ZeroCounter"] = b.get_object('mw2_frame')
-        self.pages["ZeroCrystal"] = b.get_object('mw3_frame')
-        self.pages["SetMax"] = b.get_object('mw4_frame')
-        self.pages["SetParams"] = b.get_object('mw5_frame')
-        self.pages["Measure"] = b.get_object('mw6_frame')
-        self.pages["TurnOn"] = b.get_object('mw7_frame')
-        self.pages["Save"] = b.get_object('mw8_frame')
-        self.pages["Table"] = b.get_object('plot_table')
-        self.pages["Plot"] = b.get_object('plot_plot')
+        self.pages["ChooseSerial"] = b.get_object("mw1_frame")
+        self.pages["ZeroCounter"] = b.get_object("mw2_frame")
+        self.pages["ZeroCrystal"] = b.get_object("mw3_frame")
+        self.pages["SetMax"] = b.get_object("mw4_frame")
+        self.pages["SetParams"] = b.get_object("mw5_frame")
+        self.pages["Measure"] = b.get_object("mw6_frame")
+        self.pages["TurnOn"] = b.get_object("mw7_frame")
+        self.pages["Save"] = b.get_object("mw8_frame")
+        self.pages["Table"] = b.get_object("plot_table")
+        self.pages["Plot"] = b.get_object("plot_plot")
 
         self.pages["ChooseSerial"].tkraise()
 
@@ -225,7 +225,7 @@ class MyApplication():
 
     def btn_ok1_clicked(self):
         serial_selected = None
-        selection_string = self.builder.get_object('SerialCombo').current()
+        selection_string = self.builder.get_object("SerialCombo").current()
         for s in comports():
             if s.device == selection_string:
                 serial_selected = s
@@ -265,7 +265,7 @@ class MyApplication():
         self.builder.get_object("btn_ok_parameters").config(state="disabled")
         self.pages["Measure"].tkraise()
     def btn_ok6_clicked(self):
-        countsentry = self.builder.get_object('CountsEntry')
+        countsentry = self.builder.get_object("CountsEntry")
         if len(counts) == 0:
             counts.append(abs(int(countsentry.get())))
             countsentry.delete(0, tk.END)
@@ -273,7 +273,7 @@ class MyApplication():
             cmd = '{"command":"goto", "steps":' + str(startsteps) + ', "velocity":"2000"}'
             serialWrite(cmd.encode("utf-8"))
             self.pages["TurnOn"].tkraise()
-            self.builder.get_object('hint_label_measure').config(text="Messung durchführen.")
+            self.builder.get_object("hint_label_measure").config(text="Messung durchführen.")
         elif len(counts) < measurementstotal:
             counts.append(abs(int(countsentry.get())))
             countsentry.delete(0, tk.END)
@@ -358,22 +358,22 @@ class MyApplication():
         success = False
         if ser.is_open:
             ser.close()
-        ser.port = self.builder.get_object('SerialCombo').current()
+        ser.port = self.builder.get_object("SerialCombo").current()
         try:
             ser.open()
             ser.write(b'{"command":"ping"}')
             if ser.readline() == b'pong\r\n':
                 success = True
-                self.builder.get_object('ErrorLabelSerial').config(text="")
+                self.builder.get_object("ErrorLabelSerial").config(text="")
         except serial.SerialException:
             pass
         if not success:
-            self.builder.get_object('ErrorLabelSerial').config(text="Achtung: kein Arduino an ausgewähltem Port!")
+            self.builder.get_object("ErrorLabelSerial").config(text="Achtung: kein Arduino an ausgewähltem Port!")
             updateSerialCombo(self)
 
     def loadpath_selected(self, event=None):
         global stepsize, measure_time, startsteps, stepsperangle, d, counts
-        filepath = self.builder.get_object('loaddatapath').cget("path")
+        filepath = self.builder.get_object("loaddatapath").cget("path")
         success = False
         try:
             try:
@@ -389,7 +389,7 @@ class MyApplication():
                         config["Crystal"]["d"] = loadfile["Parameters"]["d"]
                         counts = json.loads(loadfile["Data"]["counts"])
 
-                        self.builder.get_object('ErrorLabelLoad').config(text="")
+                        self.builder.get_object("ErrorLabelLoad").config(text="")
                         self.builder.get_object("btn_show_table").config(state="normal")
                         success = True
                     except KeyError:
@@ -401,7 +401,7 @@ class MyApplication():
         except json.decoder.JSONDecodeError:
             pass
         if not success:
-            self.builder.get_object('ErrorLabelLoad').config(text="Achtung: Datei konnte nicht gelesen werden.")
+            self.builder.get_object("ErrorLabelLoad").config(text="Achtung: Datei konnte nicht gelesen werden.")
             self.builder.get_object("btn_show_table").config(state="disabled")
 
     def btn_plot(self):
@@ -580,32 +580,31 @@ def stopwatch_update(self):
         self.builder.get_object("TimeLabel").config(text="0")
 
 def resetHints(self):
-    self.builder.get_object('hint_label_measure').config(text="Hintergrundstrahlung messen.")
-    self.builder.get_object('ErrorLabelLoad').config(text="")
-    self.builder.get_object('ErrorLabelSerial').config(text="")
+    self.builder.get_object("hint_label_measure").config(text="Hintergrundstrahlung messen.")
+    self.builder.get_object("ErrorLabelLoad").config(text="")
+    self.builder.get_object("ErrorLabelSerial").config(text="")
     self.builder.get_object("hint_label_save").config(text="Messergebnisse speichern.")
     setSerialPort(self)
-    self.builder.get_object('MaxAngle').delete(0, tk.END)
+    self.builder.get_object("MaxAngle").delete(0, tk.END)
 
 def resetParameters(self):
-    #self.builder.get_object('loaddatapath').cget("path")
-    #self.builder.get_object("pathchooserinput").cget("path")
-    self.builder.get_object('StepsizeEntry').delete(0, tk.END)
-    self.builder.get_object('TimeEntry').delete(0, tk.END)
-    self.builder.get_object('StartangleEntry').delete(0, tk.END)
-    self.builder.get_object('EndangleEntry').delete(0, tk.END)
+    self.builder.get_object("About_Text").delete(0, tk.END)
+    self.builder.get_object("StepsizeEntry").delete(0, tk.END)
+    self.builder.get_object("TimeEntry").delete(0, tk.END)
+    self.builder.get_object("StartangleEntry").delete(0, tk.END)
+    self.builder.get_object("EndangleEntry").delete(0, tk.END)
 
 def updateSerialCombo(self):
     ports = []
     for s in comports():
         ports.append(s.device)
-    self.builder.get_object('SerialCombo').config(values=ports)
+    self.builder.get_object("SerialCombo").config(values=ports)
 
 def rasterize(vectorgraphic, scale=1):
     svg = Parser.parse_file(os.path.join(imgpath, vectorgraphic))
     rast = Rasterizer()
     buff = rast.rasterize(svg, int(svg.width * scale), int(svg.height * scale), scale)
-    im = Image.frombytes('RGBA', (int(svg.width * scale), int(svg.height * scale)), buff)
+    im = Image.frombytes("RGBA", (int(svg.width * scale), int(svg.height * scale)), buff)
     return ImageTk.PhotoImage(im)
 
 def loadPlotButtonIcons(self):
@@ -654,10 +653,10 @@ def calculateParameters(self):
     btn_ok = self.builder.get_object("btn_ok_parameters")
     try:
         global startsteps, stepsize, stepsperangle, measurementstotal, measure_time
-        stepangle = abs(float(self.builder.get_object('StepsizeEntry').get()))
-        measure_time = abs(float(self.builder.get_object('TimeEntry').get()))
-        startangle = abs(float(self.builder.get_object('StartangleEntry').get()))
-        endangle = abs(float(self.builder.get_object('EndangleEntry').get()))
+        stepangle = abs(float(self.builder.get_object("StepsizeEntry").get()))
+        measure_time = abs(float(self.builder.get_object("TimeEntry").get()))
+        startangle = abs(float(self.builder.get_object("StartangleEntry").get()))
+        endangle = abs(float(self.builder.get_object("EndangleEntry").get()))
 
         try:
             maximum = abs(int(config["Stepper"]["maximum"]))
@@ -676,8 +675,8 @@ def calculateParameters(self):
                 measurementstotal = 0
             timetotal = measurementstotal * measure_time
             config["Parameters"] = {"stepangle": str(stepangle), "time": str(measure_time), "startangle": str(startangle), "endangle": str(endangle)}
-            self.builder.get_object('N_Measurements').config(text="Messungen: " + str(measurementstotal))
-            self.builder.get_object('TimeTotal').config(text="Zeit: " + str(timetotal) + "s")
+            self.builder.get_object("N_Measurements").config(text="Messungen: " + str(measurementstotal))
+            self.builder.get_object("TimeTotal").config(text="Zeit: " + str(timetotal) + "s")
             btn_ok.config(state="normal")
         else:
             btn_ok.config(state="disabled")
@@ -693,10 +692,10 @@ def loadRecentParamters(self):
             startangle = float(config["Parameters"]["startangle"])
             endangle = float(config["Parameters"]["endangle"])
 
-            self.builder.get_object('StepsizeEntry').insert(0, str(stepangle))
-            self.builder.get_object('TimeEntry').insert(0, str(measure_time))
-            self.builder.get_object('StartangleEntry').insert(0, str(startangle))
-            self.builder.get_object('EndangleEntry').insert(0, str(endangle))
+            self.builder.get_object("StepsizeEntry").insert(0, str(stepangle))
+            self.builder.get_object("TimeEntry").insert(0, str(measure_time))
+            self.builder.get_object("StartangleEntry").insert(0, str(startangle))
+            self.builder.get_object("EndangleEntry").insert(0, str(endangle))
 
             calculateParameters(self)
         except KeyError:
@@ -726,9 +725,9 @@ def setSerialPort(self):
         for s in comports():
             if str(s.vid) == config["Serial"]["vid"]:
                 if str(s.pid) == config["Serial"]["pid"]:
-                    self.builder.get_object('SerialCombo').current(s.device)
+                    self.builder.get_object("SerialCombo").current(s.device)
                     return
-        self.builder.get_object('ErrorLabelSerial').config(text="Achtung: gespeicherter Arduino nicht gefunden!")
+        self.builder.get_object("ErrorLabelSerial").config(text="Achtung: gespeicherter Arduino nicht gefunden!")
     except KeyError:
         pass
 
@@ -782,24 +781,24 @@ def drawTable(self, filename=""):
             xText = xText + str(value) + "\n"
     for value in y:
         yText = yText + str(value) + "\n"
-    self.builder.get_object('x_text').config(text=xText)
-    self.builder.get_object('y_text').config(text=yText)
+    self.builder.get_object("x_text").config(text=xText)
+    self.builder.get_object("y_text").config(text=yText)
 
     if do_lambda:
-        self.builder.get_object('x_label').config(text="Wellenlänge in m")
+        self.builder.get_object("x_label").config(text="Wellenlänge in m")
     else:
-        self.builder.get_object('x_label').config(text="Glanzinkel in °")
+        self.builder.get_object("x_label").config(text="Glanzinkel in °")
     if do_subtractbackground:
         back = " (ohne Hintergrundstrahlung)"
     else:
         back = ""
     if do_persecond:
-        self.builder.get_object('y_label').config(text="Zählrahte in 1/s" + back)
+        self.builder.get_object("y_label").config(text="Zählrahte in 1/s" + back)
     else:
-        self.builder.get_object('y_label').config(text="Zählrahte in 1/" + str(measure_time) + "s" + back)
+        self.builder.get_object("y_label").config(text="Zählrahte in 1/" + str(measure_time) + "s" + back)
 
-    self.builder.get_object('D_Label').config(text="d = {:0.3e}".format(d))
-    self.builder.get_object('Background_Label').config(text="Hintergrundstrahlung: " + str(counts[0]) + " / " + str(measure_time) + "s")
+    self.builder.get_object("D_Label").config(text="d = {:0.3e}".format(d))
+    self.builder.get_object("Background_Label").config(text="Hintergrundstrahlung: " + str(counts[0]) + " / " + str(measure_time) + "s")
 
     if filename != "":
         with open(filename, "w", newline="") as csvfile:
@@ -811,7 +810,7 @@ def drawTable(self, filename=""):
                     csvwriter.writerow([str(x[i]), str(y[i])])
 
 def drawPlot(self, filename=""):
-    scrolledframe = self.builder.get_object('plot_frame')
+    scrolledframe = self.builder.get_object("plot_frame")
     figure = Figure(figsize=(8, 8), dpi=80)
     axis = figure.add_subplot(111)
     x, y = calculateValues(self)
@@ -837,11 +836,11 @@ def drawPlot(self, filename=""):
     axis.set_title("Röntgenspektrum")
     canvas = FigureCanvas(figure, master=scrolledframe)
     canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=0, sticky='nsew')
+    canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
 
     if filename != "":
         figure.savefig(filename)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = MyApplication()
     app.run()
