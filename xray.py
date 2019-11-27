@@ -1,30 +1,32 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import time
+import math
+import json
+import csv
+import os
 import configparser
+import tkinter as tk
+#import tkinter.ttk as ttk
+import pygubu
 import serial
 from serial.tools.list_ports import comports
-import json
-import time
-import os
-import tkinter as tk
-import tkinter.ttk as ttk
-import pygubu
-import math
 import numpy as np
-from scipy.interpolate import make_interp_spline, BSpline
+from scipy.interpolate import make_interp_spline
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg as FigureCanvas
-import csv
-from svg import Parser, Rasterizer, SVG
+from svg import Parser, Rasterizer # pylint: disable=no-name-in-module,
 from PIL import Image, ImageTk
 
 try:
+    # pylint: disable=undefined-variable, protected-access,
     path = sys._MEIPASS
-except Exception:
+except NameError:
     try:
         path = os.path.abspath(os.path.dirname(__file__))
     except NameError:
+        # pylint: disable=undefined-variable,
         path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
@@ -63,10 +65,10 @@ class MyApplication():
     def __init__(self):
         self.about_dialog = None
         self.d_dialog = None
-        
+
         self.builder = b = pygubu.Builder()
         b.add_from_file(os.path.join(path, 'xray.ui'))
-        
+
         self.mainwindow = b.get_object('Mainwindow_1')
 
         self.mainmenu = menu = b.get_object('mainmenu', self.mainwindow)
@@ -114,26 +116,26 @@ class MyApplication():
 
         loadPlotButtonIcons(self)
         iconizePlotButtons(self)
-        b.get_object("btn_plot_1").config(image=self.img_plot)
-        b.get_object("btn_table_1").config(image=self.img_table)
+        b.get_object("btn_plot_1").config(image=self.img_plot) # pylint: disable=no-member,
+        b.get_object("btn_table_1").config(image=self.img_table) # pylint: disable=no-member,
         b.get_object("btn_plot_7").config(image=self.img_save)
         b.get_object("btn_table_5").config(image=self.img_save)
 
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.quit)
-        
+
         b.connect_callbacks(self)
 
     def on_about_clicked(self):
         if self.about_dialog is None:
             dialog = self.builder.get_object("dialog_about", self.mainwindow)
             self.about_dialog = dialog
-            
+
             def dialog_btnclose_clicked():
                 dialog.close()
 
             btnclose = self.builder.get_object("About_Close")
             btnclose["command"] = dialog_btnclose_clicked
-            
+
             dialog.run()
         else:
             self.about_dialog.show()
@@ -142,8 +144,9 @@ class MyApplication():
         if self.d_dialog is None:
             dialog = self.builder.get_object("Window_set_d", self.mainwindow)
             self.d_dialog = dialog
-            
+
             def dialog_btnclose_clicked():
+                global d
                 try:
                     config["Crystal"]["d"] = self.builder.get_object("D_Entry").get()
                 except KeyError:
@@ -191,7 +194,7 @@ class MyApplication():
             entry_d["validate"] = "key"
             btnclose = self.builder.get_object("Set_D_Button")
             btnclose["command"] = dialog_btnclose_clicked
-            
+
             dialog.run()
         else:
             entry_d = self.builder.get_object("D_Entry")
@@ -219,7 +222,7 @@ class MyApplication():
         do_smooth = False
         do_zoom = False
         self.pages["ChooseSerial"].tkraise()
-    
+
     def btn_ok1_clicked(self):
         serial_selected = None
         selection_string = self.builder.get_object('SerialCombo').current()
@@ -251,7 +254,7 @@ class MyApplication():
             serialWrite(b'{"command":"position"}')
             data = json.loads(serialRead())
             config["Stepper"] = {}
-            config["Stepper"]["maximum"] = str(data["position"])	
+            config["Stepper"]["maximum"] = str(data["position"])
             config["Stepper"]["angle"] = self.builder.get_object('MaxAngle').get()
             cmd = '{"command":"goto", "steps":' + str(-int(config["Stepper"]["maximum"])) + ', "velocity":"2000"}'
             serialWrite(cmd.encode("utf-8"))
@@ -375,7 +378,7 @@ class MyApplication():
         try:
             try:
                 try:
-                    try: 
+                    try:
                         loadfile = configparser.ConfigParser()
                         loadfile.read(filepath)
                         stepsize = float(loadfile["Parameters"]["stepsize"])
@@ -396,7 +399,7 @@ class MyApplication():
             except configparser.Error:
                 pass
         except json.decoder.JSONDecodeError:
-                pass
+            pass
         if not success:
             self.builder.get_object('ErrorLabelLoad').config(text="Achtung: Datei konnte nicht gelesen werden.")
             self.builder.get_object("btn_show_table").config(state="disabled")
@@ -434,7 +437,7 @@ class MyApplication():
         else:
             drawTable(self)
         iconizePlotButtons(self)
-            
+
     def btn_persecond(self):
         global do_persecond
         if do_persecond:
@@ -509,7 +512,7 @@ class MyApplication():
     def validateParameters(self, event=None):
         calculateParameters(self)
 
-    def validateFloat(self, value_new, value_old, btn = None):
+    def validateFloat(self, value_new, value_old, btn=None):
         if btn:
             btn_obj = self.builder.get_object(btn)
         allowed = False
@@ -533,7 +536,7 @@ class MyApplication():
                 allowed = True
         return allowed
 
-    def validateInt(self, value_new, value_old, btn = None):
+    def validateInt(self, value_new, value_old, btn=None):
         if btn:
             btn_obj = self.builder.get_object(btn)
         allowed = False
@@ -598,7 +601,7 @@ def updateSerialCombo(self):
         ports.append(s.device)
     self.builder.get_object('SerialCombo').config(values=ports)
 
-def rasterize(vectorgraphic, scale = 1):
+def rasterize(vectorgraphic, scale=1):
     svg = Parser.parse_file(os.path.join(imgpath, vectorgraphic))
     rast = Rasterizer()
     buff = rast.rasterize(svg, int(svg.width * scale), int(svg.height * scale), scale)
@@ -682,6 +685,7 @@ def calculateParameters(self):
         btn_ok.config(state="disabled")
 
 def loadRecentParamters(self):
+    global measure_time
     try:
         try:
             stepangle = float(config["Parameters"]["stepangle"])
@@ -737,7 +741,7 @@ def calculateValues(self):
     y = []
 
     angle = np.empty(len(counts) - 1)
-    for i in range(len(angle)):
+    for i in enumerate(angle):
         angle[i] = startsteps / stepsperangle + i * anglesize
     x = angle
 
@@ -757,7 +761,7 @@ def calculateValues(self):
     y = counts_normalized
 
     if do_smooth:
-        xinterpolated = np.linspace(x.min(),x.max(),300)
+        xinterpolated = np.linspace(x.min(), x.max(), 300)
         spl = make_interp_spline(x, y, k=3)
         ysmoothed = spl(xinterpolated)
         x = xinterpolated
@@ -765,7 +769,7 @@ def calculateValues(self):
 
     return [x, y]
 
-def drawTable(self, filename = ""):
+def drawTable(self, filename=""):
     x, y = calculateValues(self)
 
     xText = ""
@@ -783,7 +787,7 @@ def drawTable(self, filename = ""):
 
     if do_lambda:
         self.builder.get_object('x_label').config(text="Wellenlänge in m")
-    else :
+    else:
         self.builder.get_object('x_label').config(text="Glanzinkel in °")
     if do_subtractbackground:
         back = " (ohne Hintergrundstrahlung)"
@@ -800,21 +804,22 @@ def drawTable(self, filename = ""):
     if filename != "":
         with open(filename, "w", newline="") as csvfile:
             csvwriter = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
-            for i in range(len(x)):
+            for i in enumerate(x):
                 if do_lambda:
                     csvwriter.writerow(["{:0.3e}".format(x[i]), str(y[i])])
                 else:
                     csvwriter.writerow([str(x[i]), str(y[i])])
 
-def drawPlot(self, filename = ""):
+def drawPlot(self, filename=""):
     scrolledframe = self.builder.get_object('plot_frame')
     figure = Figure(figsize=(8, 8), dpi=80)
     axis = figure.add_subplot(111)
     x, y = calculateValues(self)
     axis.plot(x, y)
     if do_zoom:
-        last = y[0]
-        for i in range(len(y)):
+        i = 0
+        last = y[i]
+        for i in enumerate(y):
             if y[i] > last:
                 break
             last = y[i]
@@ -823,7 +828,7 @@ def drawPlot(self, filename = ""):
         axis.set_ylim(top=y.max() + abs(y.max() * 0.075), bottom=y.min() - abs(y.min() * 0.075))
     if do_lambda:
         axis.set_xlabel("Wellenlänge in m")
-    else :
+    else:
         axis.set_xlabel("Glanzinkel in °")
     if do_persecond:
         axis.set_ylabel("Zählrahte in 1/s")
