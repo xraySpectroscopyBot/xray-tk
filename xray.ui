@@ -1912,10 +1912,11 @@
     </child>
   </object>
   <object class="pygubu.builder.widgets.dialog" id="Window_set_d">
-    <property name="height">100</property>
+    <property name="maxsize">500|300</property>
+    <property name="minsize">300|200</property>
     <property name="modal">false</property>
+    <property name="resizable">both</property>
     <property name="title" translatable="yes">Gitterkonstante eintragen</property>
-    <property name="width">200</property>
     <child>
       <object class="ttk.Frame" id="d_frame">
         <property name="borderwidth">40</property>
@@ -1925,6 +1926,12 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">0</property>
+          <property name="sticky">nsew</property>
+          <rows>
+            <row id="2">
+              <property name="weight">1</property>
+            </row>
+          </rows>
           <columns>
             <column id="0">
               <property name="pad">0</property>
@@ -1962,7 +1969,17 @@
               <property name="pady">2</property>
               <property name="propagate">True</property>
               <property name="row">2</property>
-              <property name="sticky">ew</property>
+              <property name="sticky">nsew</property>
+              <rows>
+                <row id="0">
+                  <property name="weight">1</property>
+                </row>
+              </rows>
+              <columns>
+                <column id="0">
+                  <property name="weight">1</property>
+                </column>
+              </columns>
             </layout>
           </object>
         </child>
@@ -1980,9 +1997,10 @@
     </child>
   </object>
   <object class="pygubu.builder.widgets.dialog" id="dialog_about">
-    <property name="height">100</property>
+    <property name="maxsize">800|400</property>
+    <property name="minsize">500|200</property>
     <property name="modal">false</property>
-    <property name="width">200</property>
+    <property name="resizable">both</property>
     <child>
       <object class="ttk.Frame" id="about_frame">
         <property name="borderwidth">40</property>
@@ -1992,6 +2010,12 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">0</property>
+          <property name="sticky">nsew</property>
+          <rows>
+            <row id="0">
+              <property name="weight">1</property>
+            </row>
+          </rows>
           <columns>
             <column id="0">
               <property name="pad">0</property>
@@ -2018,7 +2042,7 @@ https://github.com/xraySpectroscopyBot/xray-tk
             <layout>
               <property name="column">0</property>
               <property name="propagate">True</property>
-              <property name="row">3</property>
+              <property name="row">1</property>
             </layout>
           </object>
         </child>
