@@ -56,8 +56,6 @@ do_subtractbackground = False
 do_smooth = False
 do_zoom = False
 
-saving = False
-
 time_start = 0
 
 class MyApplication():
@@ -292,46 +290,31 @@ class MyApplication():
             except json.decoder.JSONDecodeError:
                 pass
             self.pages["Save"].tkraise()
+            self.on_btn_save_measure()
     def btn_ok7_clicked(self):
         self.pages["Measure"].tkraise()
     def btn_ok8_clicked(self):
-        filepath = self.builder.get_object("pathchooserinput").cget("path") + "/" + self.builder.get_object("filenameentry").get()
-        if not saving:
-            if not filepath[-4:] == ".dat":
-                filepath = filepath + ".dat"
-            savefile = configparser.ConfigParser()
-            savefile.read(filepath)
-            savefile["Parameters"] = {}
-            savefile["Parameters"]["stepsize"] = str(stepsize)
-            savefile["Parameters"]["time"] = str(measure_time)
-            savefile["Parameters"]["startsteps"] = str(startsteps)
-            savefile["Parameters"]["stepsperangle"] = str(stepsperangle)
-            savefile["Parameters"]["d"] = config["Crystal"]["d"]
-            savefile["Data"] = {}
-            savefile["Data"]["counts"] = str(counts)
-            with open(filepath, "w") as save:
-                savefile.write(save)
-            self.pages["Table"].tkraise()
-            drawTable(self)
-        else:
-            if do_plot:
-                if filepath[-4:] == ".svg":
-                    drawPlot(self, filepath)
-                elif filepath[-4:] == ".png":
-                    drawPlot(self, filepath)
-                elif filepath[-4:] == ".jpg":
-                    drawPlot(self, filepath)
-                elif filepath[-5:] == ".jpeg":
-                    drawPlot(self, filepath)
-                else:
-                    drawPlot(self, filepath + ".png")
-                self.pages["Plot"].tkraise()
-            else:
-                if filepath[-4:] == ".csv":
-                    drawTable(self, filepath)
-                else:
-                    drawTable(self, filepath + ".csv")
-                self.pages["Table"].tkraise()
+        self.pages["Table"].tkraise()
+        drawTable(self)
+
+    def on_btn_save_measure(self):
+        filepath = tk.filedialog.asksaveasfilename(initialdir=os.path.join(path, "messwerte.dat"), title="Messwerte speichern",
+                                                   filetypes=(("Alle .dat Dateien", "*.dat"), ("Alle Dateien", "*.*")))
+        if filepath == () or filepath == "":
+            self.builder.get_object("ErrorLabelLoad").config(text="")
+            return
+        savefile = configparser.ConfigParser()
+        savefile.read(filepath)
+        savefile["Parameters"] = {}
+        savefile["Parameters"]["stepsize"] = str(stepsize)
+        savefile["Parameters"]["time"] = str(measure_time)
+        savefile["Parameters"]["startsteps"] = str(startsteps)
+        savefile["Parameters"]["stepsperangle"] = str(stepsperangle)
+        savefile["Parameters"]["d"] = config["Crystal"]["d"]
+        savefile["Data"] = {}
+        savefile["Data"]["counts"] = str(counts)
+        with open(filepath, "w") as save:
+            savefile.write(save)
 
     def btn_stopwatch_start(self):
         global time_start
@@ -339,9 +322,44 @@ class MyApplication():
         stopwatch_update(self)
 
     def btn_show_table(self):
-        self.builder.get_object("btn_show_table").config(state="disabled")
-        self.pages["Table"].tkraise()
-        drawTable(self)
+        global stepsize, measure_time, startsteps, stepsperangle, d, counts
+        filepath = tk.filedialog.askopenfilename(initialdir=os.path.join(path, "messwerte.dat"), title="Messwerte laden",
+                                                 filetypes=(("Alle .dat Dateien", "*.dat"), ("Alle Dateien", "*.*")))
+        if filepath == () or filepath == "":
+            self.builder.get_object("ErrorLabelLoad").config(text="")
+            return
+        try:
+            try:
+                try:
+                    try:
+                        loadfile = configparser.ConfigParser()
+                        loadfile.read(filepath)
+                        stepsize = float(loadfile["Parameters"]["stepsize"])
+                        measure_time = float(loadfile["Parameters"]["time"])
+                        startsteps = float(loadfile["Parameters"]["startsteps"])
+                        stepsperangle = float(loadfile["Parameters"]["stepsperangle"])
+                        d = float(loadfile["Parameters"]["d"])
+                        config["Crystal"]["d"] = loadfile["Parameters"]["d"]
+                        counts = json.loads(loadfile["Data"]["counts"])
+
+                        if stepsize != 0 and stepsperangle != 0 and len(counts) > 0:
+                            if measure_time == 0:
+                                measure_time = 1
+                            if d == 0:
+                                d = 201.4e-12
+                            self.builder.get_object("ErrorLabelLoad").config(text="")
+                            self.pages["Table"].tkraise()
+                            drawTable(self)
+                            return
+                    except KeyError:
+                        pass
+                except ValueError:
+                    pass
+            except configparser.Error:
+                pass
+        except json.decoder.JSONDecodeError:
+            pass
+        self.builder.get_object("ErrorLabelLoad").config(text="Achtung: Datei konnte nicht gelesen werden.")
 
     def btn_fast_up(self, event=None):
         serialWrite(b'{"command":"move", "direction":"up", "velocity":"1000"}')
@@ -370,39 +388,6 @@ class MyApplication():
         if not success:
             self.builder.get_object("ErrorLabelSerial").config(text="Achtung: kein Arduino an ausgewähltem Port!")
             updateSerialCombo(self)
-
-    def loadpath_selected(self, event=None):
-        global stepsize, measure_time, startsteps, stepsperangle, d, counts
-        filepath = self.builder.get_object("loaddatapath").cget("path")
-        success = False
-        try:
-            try:
-                try:
-                    try:
-                        loadfile = configparser.ConfigParser()
-                        loadfile.read(filepath)
-                        stepsize = float(loadfile["Parameters"]["stepsize"])
-                        measure_time = float(loadfile["Parameters"]["time"])
-                        startsteps = float(loadfile["Parameters"]["startsteps"])
-                        stepsperangle = float(loadfile["Parameters"]["stepsperangle"])
-                        d = float(loadfile["Parameters"]["d"])
-                        config["Crystal"]["d"] = loadfile["Parameters"]["d"]
-                        counts = json.loads(loadfile["Data"]["counts"])
-
-                        self.builder.get_object("ErrorLabelLoad").config(text="")
-                        self.builder.get_object("btn_show_table").config(state="normal")
-                        success = True
-                    except KeyError:
-                        pass
-                except ValueError:
-                    pass
-            except configparser.Error:
-                pass
-        except json.decoder.JSONDecodeError:
-            pass
-        if not success:
-            self.builder.get_object("ErrorLabelLoad").config(text="Achtung: Datei konnte nicht gelesen werden.")
-            self.builder.get_object("btn_show_table").config(state="disabled")
 
     def btn_plot(self):
         global do_plot, do_lambda, do_persecond, do_subtractbackground, do_smooth, do_zoom
@@ -487,16 +472,34 @@ class MyApplication():
         iconizePlotButtons(self)
 
     def btn_save(self):
-        global saving
-        saving = True
-        self.builder.get_object("hint_label_save").config(text="Auswertung speichern.")
         if do_plot:
-            self.builder.get_object("filenameentry").delete(0, tk.END)
-            self.builder.get_object("filenameentry").insert(0, "spektrum.png")
+            initialdir = os.path.join(path, "diagramm.png")
+            title = "Diagramm speichern"
+            filetypes = (("Alle .png Dateien", "*.png"), ("Alle .jpeg Dateien", "*.jpg", "*.jpeg"),
+                         ("Alle .svg Dateien", "*.svg"), ("Alle Dateien", "*.*"))
         else:
-            self.builder.get_object("filenameentry").delete(0, tk.END)
-            self.builder.get_object("filenameentry").insert(0, "spektrum.csv")
-        self.pages["Save"].tkraise()
+            initialdir = os.path.join(path, "werte.csv")
+            title = "Tabelle speichern"
+            filetypes = (("Alle .csv Dateien", "*.csv"), ("Alle Dateien", "*.*"))
+        filepath = tk.filedialog.asksaveasfilename(initialdir=initialdir, title=title, filetypes=filetypes)
+        if filepath == () or filepath == "":
+            return
+        if do_plot:
+            if filepath[-4:] == ".svg":
+                drawPlot(self, filepath)
+            elif filepath[-4:] == ".png":
+                drawPlot(self, filepath)
+            elif filepath[-4:] == ".jpg":
+                drawPlot(self, filepath)
+            elif filepath[-5:] == ".jpeg":
+                drawPlot(self, filepath)
+            else:
+                drawPlot(self, filepath + ".png")
+        else:
+            if filepath[-4:] == ".csv":
+                drawTable(self, filepath)
+            else:
+                drawTable(self, filepath + ".csv")
 
 
     def quit(self, event=None):
