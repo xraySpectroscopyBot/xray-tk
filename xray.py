@@ -574,10 +574,10 @@ def serialRead():
 
 def stopwatch_update(self):
     if measure_time - (time.time() - time_start) > 0:
-        self.builder.get_object("TimeLabel").config(text=str(round(measure_time - (time.time() - time_start), 1)))
-        self.mainwindow.after(0, stopwatch_update, self)
+        self.builder.get_object("Stopwatch").config(text=str(round(measure_time - (time.time() - time_start), 1)))
+        self.mainwindow.after(100, stopwatch_update, self)
     else:
-        self.builder.get_object("TimeLabel").config(text="0")
+        self.builder.get_object("Stopwatch").config(text="0")
 
 def resetHints(self):
     self.builder.get_object("hint_label_measure").config(text="Hintergrundstrahlung messen.")
