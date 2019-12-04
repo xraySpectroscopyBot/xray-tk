@@ -740,13 +740,14 @@ def calculateValues(self):
     y = []
 
     angle = np.empty(len(counts) - 1)
-    for i in enumerate(angle):
+    for i, _ in enumerate(angle):
+        print(i)
         angle[i] = startsteps / stepsperangle + i * anglesize
     x = angle
 
     if do_lambda:
         wavelength = np.empty(len(x))
-        for i in range(len(x)):
+        for i, _ in enumerate(x):
             wavelength[i] = 2*d*math.sin(math.radians(angle[i]))
         x = wavelength
 
@@ -803,7 +804,7 @@ def drawTable(self, filename=""):
     if filename != "":
         with open(filename, "w", newline="") as csvfile:
             csvwriter = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
-            for i in enumerate(x):
+            for i, _ in enumerate(x):
                 if do_lambda:
                     csvwriter.writerow(["{:0.3e}".format(x[i]), str(y[i])])
                 else:
@@ -818,7 +819,7 @@ def drawPlot(self, filename=""):
     if do_zoom:
         i = 0
         last = y[i]
-        for i in enumerate(y):
+        for i, _ in enumerate(y):
             if y[i] > last:
                 break
             last = y[i]
