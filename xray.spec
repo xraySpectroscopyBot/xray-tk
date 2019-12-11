@@ -11,7 +11,7 @@ hidden_imports = [
     'pygubu.builder.widgets.scrolledframe',
 #    'pygubu.builder.widgets.tkscrollbarhelper',
 #    'pygubu.builder.widgets.tkscrolledframe',
-    'pygubu.builder.widgets.pathchooserinput',
+#    'pygubu.builder.widgets.pathchooserinput',
     'pygubu.builder.widgets.combobox',
     'PIL._tkinter_finder',
 ]
