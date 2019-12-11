@@ -1,6 +1,10 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-block_cipher = None
+#Pack into single executable:
+onefile = True
+#Show console when launching executable
+console = True
+
 
 hidden_imports = [
 #    'pygubu.builder.tkstdwidgets',
@@ -23,7 +27,8 @@ data_files = [
     ('images/plot/*', 'images/plot'),
 ]
 
-onefile = False
+
+block_cipher = None
 
 a = Analysis(['xray.py'],
              pathex=['/home/falk/Schreibtisch/xray-windows/xray-tk'],
@@ -52,7 +57,7 @@ if onefile:
               bootloader_ignore_signals=False,
               strip=False,
               upx=True,
-              console=True )
+              console=console )
 else:
     exe = EXE(pyz,
               a.scripts,
@@ -63,7 +68,7 @@ else:
               bootloader_ignore_signals=False,
               strip=False,
               upx=True,
-              console=True )
+              console=console )
     coll = COLLECT(exe,
                    a.binaries,
                    a.zipfiles,
