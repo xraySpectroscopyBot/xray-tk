@@ -2,3 +2,6 @@
 *.dat
 *.csv
 *.jpeg, *.jpg, *.png, *.svg
+build
+dist
+__pycache__
