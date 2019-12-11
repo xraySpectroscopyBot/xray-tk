@@ -13,6 +13,7 @@ hidden_imports = [
 #    'pygubu.builder.widgets.tkscrolledframe',
 #    'pygubu.builder.widgets.pathchooserinput',
     'pygubu.builder.widgets.combobox',
+	'pygubu.builder.widgets.dialog',
     'PIL._tkinter_finder',
 ]
 
