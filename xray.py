@@ -13,7 +13,7 @@ import serial
 from serial.tools.list_ports import comports
 import numpy as np
 try:
-from scipy.interpolate import make_interp_spline
+    from scipy.interpolate import make_interp_spline
 except ImportError:
     from scipy.interpolate import spline
 from matplotlib.figure import Figure
@@ -766,8 +766,11 @@ def calculateValues(self):
 
     if do_smooth:
         xinterpolated = np.linspace(x.min(), x.max(), 300)
-        spl = make_interp_spline(x, y, k=3)
-        ysmoothed = spl(xinterpolated)
+        try:
+            spl = make_interp_spline(x, y, k=3)
+            ysmoothed = spl(xinterpolated)
+        except NameError:
+            ysmoothed = spline(x, y, xinterpolated)
         x = xinterpolated
         y = ysmoothed
 
