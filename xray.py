@@ -746,7 +746,6 @@ def calculateValues(self):
 
     angle = np.empty(len(counts) - 1)
     for i, _ in enumerate(angle):
-        print(i)
         angle[i] = startsteps / stepsperangle + i * anglesize
     x = angle
 
