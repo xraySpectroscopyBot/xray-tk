@@ -515,7 +515,7 @@ class MyApplication():
         self.mainwindow.mainloop()
 
     def validateParameters(self, event=None):
-        calculateParameters(self)
+        self.mainwindow.after(0, calculateParameters, self)
 
     def validateFloat(self, value_new, value_old, btn=None):
         if btn:
