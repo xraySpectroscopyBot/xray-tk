@@ -241,8 +241,7 @@ class MyApplication():
         serialWrite(b'{"command":"sethome"}')
         try:
             try:
-                int(config["Stepper"]["maximum"])
-                float(config["Stepper"]["angle"])
+                if abs(int(config["Stepper"]["maximum"])) > 0 and abs(float(config["Stepper"]["angle"])) > 0:
                 self.pages["SetParams"].tkraise()
                 return
             except KeyError:
@@ -251,16 +250,16 @@ class MyApplication():
             pass
         self.pages["SetMax"].tkraise()
     def btn_ok4_clicked(self):
+        config["Stepper"] = {}
+        config["Stepper"]["angle"] = self.builder.get_object('MaxAngle').get()
         try:
             serialWrite(b'{"command":"position"}')
             data = json.loads(serialRead())
-            config["Stepper"] = {}
             config["Stepper"]["maximum"] = str(data["position"])
-            config["Stepper"]["angle"] = self.builder.get_object('MaxAngle').get()
-            cmd = '{"command":"goto", "steps":' + str(-int(config["Stepper"]["maximum"])) + ', "velocity":"2000"}'
+            cmd = '{"command":"goto", "steps":-' + str(data["position"]) + ', "velocity":"2000"}'
             serialWrite(cmd.encode("utf-8"))
         except json.decoder.JSONDecodeError:
-            pass
+            config["Stepper"]["maximum"] = "1"
         self.pages["SetParams"].tkraise()
     def btn_ok5_clicked(self):
         self.builder.get_object("btn_ok_parameters").config(state="disabled")
