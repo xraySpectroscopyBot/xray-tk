@@ -667,7 +667,7 @@ def calculateParameters(self):
             maximum = abs(int(config["Stepper"]["maximum"]))
             angle = abs(float(config["Stepper"]["angle"]))
         except KeyError:
-            maximum = 0
+            maximum = 1
             angle = 1
         if startangle >= 0 and endangle >= startangle and endangle <= angle and stepangle > 0 and stepangle <= endangle - startangle and measure_time > 0:
             stepsperangle = maximum // angle
