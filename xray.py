@@ -242,8 +242,8 @@ class MyApplication():
         try:
             try:
                 if abs(int(config["Stepper"]["maximum"])) > 0 and abs(float(config["Stepper"]["angle"])) > 0:
-                self.pages["SetParams"].tkraise()
-                return
+                    self.pages["SetParams"].tkraise()
+                    return
             except KeyError:
                 pass
         except ValueError:
