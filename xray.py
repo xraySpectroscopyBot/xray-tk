@@ -8,16 +8,19 @@ import csv
 import os
 import configparser
 import tkinter as tk
-#import tkinter.ttk as ttk
 import pygubu
 import serial
 from serial.tools.list_ports import comports
 import numpy as np
+try:
 from scipy.interpolate import make_interp_spline
+except ImportError:
+    from scipy.interpolate import spline
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg as FigureCanvas
 from svg import Parser, Rasterizer # pylint: disable=no-name-in-module,
 from PIL import Image, ImageTk
+
 
 try:
     # pylint: disable=undefined-variable, protected-access,
