@@ -5,35 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="SVGRoot"
-   version="1.1"
-   viewBox="0 0 16 16"
-   height="16px"
    width="16px"
-   sodipodi:docname="sharp.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1613"
-     inkscape:window-height="995"
-     id="namedview15"
-     showgrid="false"
-     inkscape:zoom="29.5"
-     inkscape:cx="4.4139431"
-     inkscape:cy="8.6320295"
-     inkscape:window-x="67"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="SVGRoot" />
+   height="16px"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="SVGRoot">
   <defs
      id="defs815" />
   <metadata
@@ -44,58 +20,53 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      id="layer1">
     <path
-       id="path1500"
+       style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 0.5584062,14.538626 H 15.744053"
-       style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="path1500" />
     <path
-       id="path1502"
+       style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 1.2393726,15.2155 V 0.3965878"
-       style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <text
-       transform="scale(1.0113239,0.98880293)"
+       id="path1502" />
+    <g
        id="text1506"
-       y="1.1018965"
-       x="1.6892215"
        style="font-style:normal;font-weight:normal;font-size:1.34843183px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.01132381"
-       xml:space="preserve"><tspan
-         style="stroke-width:1.01132381"
-         y="1.1018965"
-         x="1.6892215"
-         id="tspan1504">x</tspan></text>
-    <text
        transform="scale(1.0113239,0.98880293)"
+       aria-label="x">
+      <path
+         id="path821"
+         style="stroke-width:1.01132381"
+         d="M 2.4292788,0.36447287 2.1626212,0.72330849 2.4431055,1.1018965 H 2.3002297 L 2.0855867,0.81219437 1.8709438,1.1018965 H 1.7280679 L 2.014478,0.71606593 1.7524292,0.36447287 H 1.8953051 L 2.090854,0.62718005 2.286403,0.36447287 Z" />
+    </g>
+    <g
        id="text1506-3"
-       y="13.951563"
-       x="14.751823"
        style="font-style:normal;font-weight:normal;font-size:1.34843183px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.01132381"
-       xml:space="preserve"><tspan
-         style="stroke-width:1.01132381"
-         y="13.951563"
-         x="14.751823"
-         id="tspan1504-6">y</tspan></text>
-    <path
-       id="path1569"
-       d="m 2.3411871,1.6216355 1.1299916,10.2954955 2.1696355,1.259535 0.8814594,-2.620225 2.0566516,1.722793 1.3108256,-1.435289 0.7571552,-7.229966 1.88707,2.8198784 1.604586,-2.247101 1.378587,3.7808316"
-       style="fill:none;stroke:#ab0000;stroke-width:0.79100001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccc" />
-    <text
        transform="scale(1.0113239,0.98880293)"
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:1.34843183px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.01132381"
-       x="0.1567627"
-       y="15.998822"
-       id="text1573"><tspan
+       aria-label="y">
+      <path
+         id="path824"
          style="stroke-width:1.01132381"
-         id="tspan1571"
-         x="0.1567627"
-         y="15.998822">0</tspan></text>
+         d="m 15.185718,14.020038 q -0.05136,0.131683 -0.100079,0.171846 -0.04872,0.04016 -0.130366,0.04016 h -0.09679 v -0.101396 h 0.07111 q 0.05004,0 0.07769,-0.0237 0.02765,-0.0237 0.06123,-0.111931 l 0.02173,-0.05531 -0.298261,-0.725572 h 0.12839 l 0.230445,0.576771 0.230445,-0.576771 h 0.128391 z" />
+    </g>
+    <path
+       style="fill:none;stroke:#ab0000;stroke-width:0.79100001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 2.3411871,1.6216355 1.1299916,10.2954955 2.1696355,1.259535 0.8814594,-2.620225 2.0566516,1.722793 1.3108256,-1.435289 0.7571552,-7.229966 1.88707,2.8198784 1.604586,-2.247101 1.378587,3.7808316"
+       id="path1569" />
+    <g
+       id="text1573"
+       style="font-style:normal;font-weight:normal;font-size:1.34843183px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.01132381"
+       transform="scale(1.0113239,0.98880293)"
+       aria-label="0">
+      <path
+         id="path827"
+         style="stroke-width:1.01132381"
+         d="m 0.5853902,15.103379 q -0.10271258,0 -0.15472728,0.101396 -0.0513563,0.100737 -0.0513563,0.303529 0,0.202133 0.0513563,0.303529 0.0520147,0.100737 0.15472728,0.100737 0.103371,0 0.15472729,-0.100737 0.0520147,-0.101396 0.0520147,-0.303529 0,-0.202792 -0.0520147,-0.303529 Q 0.6887612,15.103379 0.5853902,15.103379 Z m 0,-0.105346 q 0.16526191,0 0.25217256,0.131024 0.0875691,0.130366 0.0875691,0.379247 0,0.248222 -0.0875691,0.379246 -0.0869106,0.130366 -0.25217256,0.130366 -0.1652619,0 -0.25283096,-0.130366 -0.0869106,-0.131024 -0.0869106,-0.379246 0,-0.248881 0.0869106,-0.379247 0.0875691,-0.131024 0.25283096,-0.131024 z" />
+    </g>
   </g>
 </svg>

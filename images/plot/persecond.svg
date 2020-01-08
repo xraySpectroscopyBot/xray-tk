@@ -5,11 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   id="SVGRoot"
-   version="1.1"
-   viewBox="0 0 16 16"
+   width="16px"
    height="16px"
-   width="16px">
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="SVGRoot">
   <defs
      id="defs815" />
   <metadata
@@ -26,23 +26,22 @@
   </metadata>
   <g
      id="layer1">
-    <text
+    <g
        id="text1376"
-       y="7.8359375"
-       x="5.2086592"
        style="font-style:normal;font-weight:normal;font-size:9.33333302px;line-height:1.5ex;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       aria-label="1s">
+      <path
+         id="path817"
          style="font-size:9.33333302px;line-height:1.5ex"
-         y="7.8359375"
-         x="5.2086592"
-         id="tspan1374">1</tspan><tspan
+         d="M 6.3662112,7.0611979 H 7.8701174 V 1.8704429 L 6.2340498,2.1985679 V 1.3600263 l 1.626953,-0.328125 H 8.7815757 V 7.0611979 H 10.285482 V 7.8359375 H 6.3662112 Z" />
+      <path
+         id="path819"
          style="font-size:9.33333302px;line-height:1.5ex"
-         id="tspan1416"
-         y="14.835938"
-         x="5.2086592">s</tspan></text>
+         d="M 9.3421226,9.8821626 V 10.675131 Q 8.9866538,10.49284 8.6038413,10.401694 q -0.3828124,-0.09115 -0.7929687,-0.09115 -0.6243489,0 -0.938802,0.191406 -0.3098958,0.191406 -0.3098958,0.574219 0,0.291667 0.2233072,0.460286 0.2233073,0.164063 0.8977865,0.314454 l 0.2871093,0.0638 q 0.8932292,0.191406 1.2669271,0.542317 0.3782552,0.346354 0.3782552,0.970703 0,0.710938 -0.5651042,1.125651 -0.5605468,0.414714 -1.5449218,0.414714 -0.4101562,0 -0.8567708,-0.08203 Q 6.206706,14.808595 5.7145185,14.64909 v -0.865886 q 0.4648438,0.241537 0.9160156,0.364583 0.4511719,0.11849 0.8932292,0.11849 0.5924479,0 0.9114583,-0.200521 0.3190104,-0.205078 0.3190104,-0.574219 0,-0.341796 -0.2324219,-0.524088 Q 8.2939455,12.785157 7.5146487,12.616537 L 7.222982,12.548178 Q 6.4436852,12.384116 6.097331,12.046876 5.7509769,11.705079 5.7509769,11.112631 q 0,-0.720052 0.5104166,-1.111979 0.5104167,-0.3919269 1.4492187,-0.3919269 0.4648437,0 0.875,0.068359 0.4101562,0.068359 0.7565104,0.2050781 z" />
+    </g>
     <path
-       id="path1418"
+       style="fill:none;stroke:#000000;stroke-width:0.62362205;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 4.859375,8.7 h 6.28125"
-       style="fill:none;stroke:#000000;stroke-width:0.62362205;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+       id="path1418" />
   </g>
 </svg>
