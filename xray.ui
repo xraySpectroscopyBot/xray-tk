@@ -7,6 +7,16 @@
         <property name="label" translatable="yes">Einstellungen</property>
         <property name="tearoff">0</property>
         <child>
+          <object class="tk.Menuitem.Command" id="mfile_show_home">
+            <property name="command">on_showhome_clicked</property>
+            <property name="command_id_arg">false</property>
+            <property name="label" translatable="yes">Neue Messung laden / erstellen</property>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Menuitem.Separator" id="separator1" />
+        </child>
+        <child>
           <object class="tk.Menuitem.Command" id="mfile_set_d">
             <property name="command">on_set_d_clicked</property>
             <property name="command_id_arg">false</property>
@@ -28,7 +38,7 @@
           </object>
         </child>
         <child>
-          <object class="tk.Menuitem.Separator" id="separator1" />
+          <object class="tk.Menuitem.Separator" id="separator2" />
         </child>
         <child>
           <object class="tk.Menuitem.Command" id="mfile_quit">
