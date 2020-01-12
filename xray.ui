@@ -203,7 +203,7 @@
           <object class="ttk.Frame" id="mw1_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -226,6 +226,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_1">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Seriellen Port auswählen oder Messwerte laden.</property>
                 <layout>
                   <property name="column">0</property>
@@ -241,6 +242,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -432,7 +435,7 @@
           <object class="ttk.Frame" id="mw2_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -455,6 +458,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_2">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Zählrohr in die Nullposition fahren.</property>
                 <layout>
                   <property name="column">0</property>
@@ -470,6 +474,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -557,7 +563,7 @@
           <object class="ttk.Frame" id="mw3_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -580,6 +586,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_3">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Einkristall in der Nullposition feststellen.</property>
                 <layout>
                   <property name="column">0</property>
@@ -595,6 +602,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -822,7 +831,7 @@
           <object class="ttk.Frame" id="mw4_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -845,6 +854,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_4">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Maximalposition anfahren und Winkel eintragen.</property>
                 <layout>
                   <property name="column">0</property>
@@ -861,6 +871,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -1086,7 +1098,7 @@
           <object class="ttk.Frame" id="mw5_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -1109,6 +1121,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_5">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Messparameter einstellen.</property>
                 <layout>
                   <property name="column">0</property>
@@ -1125,6 +1138,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -1242,7 +1257,7 @@
           <object class="ttk.Frame" id="mw6_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -1265,6 +1280,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_measure">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Hintergrundstrahlung messen.</property>
                 <layout>
                   <property name="column">0</property>
@@ -1281,6 +1297,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -1356,7 +1374,7 @@
           <object class="ttk.Frame" id="mw7_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -1379,6 +1397,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_7">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Röntgenröhre einschalten.</property>
                 <layout>
                   <property name="column">0</property>
@@ -1394,6 +1413,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -1458,7 +1479,7 @@
           <object class="ttk.Frame" id="mw8_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -1481,6 +1502,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="hint_label_save">
+                <property name="padding">1</property>
                 <property name="text" translatable="yes">Messergebnisse speichern.</property>
                 <layout>
                   <property name="column">0</property>
@@ -1496,7 +1518,8 @@
                 <property name="text" translatable="yes">Speichern</property>
                 <layout>
                   <property name="column">1</property>
-                  <property name="padx">5</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -1509,6 +1532,8 @@
                 <property name="text" translatable="yes">OK</property>
                 <layout>
                   <property name="column">2</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">ew</property>
@@ -1542,8 +1567,9 @@
         </layout>
         <child>
           <object class="ttk.Frame" id="table_main">
-            <property name="borderwidth">2</property>
+            <property name="borderwidth">5</property>
             <property name="height">200</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -1555,13 +1581,13 @@
                   <property name="weight">0</property>
                 </row>
                 <row id="1">
-                  <property name="weight">0</property>
+                  <property name="weight">1</property>
                 </row>
                 <row id="2">
                   <property name="weight">0</property>
                 </row>
                 <row id="3">
-                  <property name="weight">1</property>
+                  <property name="weight">0</property>
                 </row>
               </rows>
               <columns>
@@ -1575,7 +1601,7 @@
             </layout>
             <child>
               <object class="ttk.Label" id="x_label">
-                <property name="relief">sunken</property>
+                <property name="relief">groove</property>
                 <property name="text" translatable="yes">x</property>
                 <layout>
                   <property name="column">0</property>
@@ -1589,7 +1615,7 @@
             </child>
             <child>
               <object class="ttk.Label" id="y_label">
-                <property name="relief">sunken</property>
+                <property name="relief">groove</property>
                 <property name="text" translatable="yes">y</property>
                 <layout>
                   <property name="column">1</property>
@@ -1604,39 +1630,40 @@
             <child>
               <object class="ttk.Label" id="x_text">
                 <property name="justify">left</property>
-                <property name="relief">sunken</property>
                 <property name="text" translatable="yes">x</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="padx">1</property>
                   <property name="pady">1</property>
                   <property name="propagate">True</property>
-                  <property name="row">2</property>
-                  <property name="sticky">nsew</property>
+                  <property name="row">1</property>
+                  <property name="sticky">new</property>
                 </layout>
               </object>
             </child>
             <child>
               <object class="ttk.Label" id="y_text">
                 <property name="justify">left</property>
-                <property name="relief">sunken</property>
                 <property name="text" translatable="yes">y</property>
                 <layout>
                   <property name="column">1</property>
                   <property name="padx">1</property>
                   <property name="pady">1</property>
                   <property name="propagate">True</property>
-                  <property name="row">2</property>
-                  <property name="sticky">nsew</property>
+                  <property name="row">1</property>
+                  <property name="sticky">new</property>
                 </layout>
               </object>
             </child>
             <child>
               <object class="ttk.Label" id="D_Label">
                 <property name="justify">left</property>
+                <property name="relief">groove</property>
                 <property name="text" translatable="yes">d = </property>
                 <layout>
                   <property name="column">0</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">3</property>
                   <property name="sticky">sew</property>
@@ -1646,9 +1673,12 @@
             <child>
               <object class="ttk.Label" id="Background_Label">
                 <property name="justify">left</property>
+                <property name="relief">groove</property>
                 <property name="text" translatable="yes">Hintergrundstrahlung: </property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">3</property>
                   <property name="sticky">sew</property>
@@ -1661,7 +1691,7 @@
           <object class="ttk.Frame" id="table_bottom">
             <property name="borderwidth">1</property>
             <property name="height">200</property>
-            <property name="relief">ridge</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -1692,6 +1722,8 @@
                 <property name="text" translatable="yes">Graph</property>
                 <layout>
                   <property name="column">0</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1704,6 +1736,8 @@
                 <property name="text" translatable="yes">λ</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1716,6 +1750,8 @@
                 <property name="text" translatable="yes">1/s</property>
                 <layout>
                   <property name="column">2</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1728,6 +1764,8 @@
                 <property name="text" translatable="yes">n-b</property>
                 <layout>
                   <property name="column">3</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1740,6 +1778,8 @@
                 <property name="text" translatable="yes">Save</property>
                 <layout>
                   <property name="column">4</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1773,8 +1813,9 @@
         </layout>
         <child>
           <object class="ttk.Frame" id="plot_main">
-            <property name="borderwidth">2</property>
+            <property name="borderwidth">5</property>
             <property name="height">200</property>
+            <property name="relief">groove</property>
             <property name="width">200</property>
             <layout>
               <property name="column">0</property>
@@ -1847,6 +1888,8 @@
                 <property name="text" translatable="yes">Table</property>
                 <layout>
                   <property name="column">0</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1859,6 +1902,8 @@
                 <property name="text" translatable="yes">θ</property>
                 <layout>
                   <property name="column">1</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1871,6 +1916,8 @@
                 <property name="text" translatable="yes">1/?s</property>
                 <layout>
                   <property name="column">2</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1883,6 +1930,8 @@
                 <property name="text" translatable="yes">n</property>
                 <layout>
                   <property name="column">3</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1895,6 +1944,8 @@
                 <property name="text" translatable="yes">sharp</property>
                 <layout>
                   <property name="column">4</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1907,6 +1958,8 @@
                 <property name="text" translatable="yes">zoom</property>
                 <layout>
                   <property name="column">5</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1919,6 +1972,8 @@
                 <property name="text" translatable="yes">Save</property>
                 <layout>
                   <property name="column">6</property>
+                  <property name="padx">1</property>
+                  <property name="pady">1</property>
                   <property name="propagate">True</property>
                   <property name="row">0</property>
                   <property name="sticky">nsew</property>
@@ -1938,7 +1993,7 @@
     <property name="title" translatable="yes">Gitterkonstante eintragen</property>
     <child>
       <object class="ttk.Frame" id="d_frame">
-        <property name="borderwidth">40</property>
+        <property name="borderwidth">25</property>
         <property name="height">200</property>
         <property name="width">200</property>
         <layout>
@@ -2037,7 +2092,7 @@
         </child>
         <child>
           <object class="ttk.Frame" id="Spacer_3">
-            <property name="height">10</property>
+            <property name="height">30</property>
             <layout>
               <property name="column">0</property>
               <property name="columnspan">3</property>
