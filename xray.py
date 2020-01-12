@@ -26,18 +26,16 @@ from PIL import Image, ImageTk
 try:
     # pylint: disable=undefined-variable, protected-access,
     path = sys._MEIPASS
+    uipath = path
+    imgpath = os.path.join(path, "images")
+    path = os.path.abspath(os.path.dirname(__file__))
 except NameError:
-    try:
-        path = os.path.abspath(os.path.dirname(__file__))
-    except NameError:
-        # pylint: disable=undefined-variable,
-        path = os.path.dirname(os.path.abspath(sys.argv[0]))
-
-
-imgpath = os.path.join(path, "images")
+    path = os.path.abspath(os.path.dirname(__file__))
+    uipath = path
+    imgpath = os.path.join(path, "images")
 
 config = configparser.ConfigParser()
-config.read(path + "/xray.ini")
+config.read(os.path.join(path, "xray.ini"))
 
 ser = serial.Serial()
 ser.baudrate = 115200
@@ -72,7 +70,7 @@ class MyApplication():
         self.d_dialog = None
 
         self.builder = b = pygubu.Builder()
-        b.add_from_file(os.path.join(path, "xray.ui"))
+        b.add_from_file(os.path.join(uipath, "xray.ui"))
 
         self.mainwindow = b.get_object("Mainwindow_1")
 
@@ -96,26 +94,26 @@ class MyApplication():
         setSerialPort(self)
         loadRecentParamters(self)
         loadConstants(self)
-        self.img_zerocounter = rasterize("xray/zerocounter.svg", 2)
+        self.img_zerocounter = rasterize("xray", "zerocounter.svg", 2)
         b.get_object("Zerocounter").config(image=self.img_zerocounter)
-        self.img_zerocrystal = rasterize("xray/zerocrystal.svg", 2)
+        self.img_zerocrystal = rasterize("xray", "zerocrystal.svg", 2)
         b.get_object("Zerocrystal").config(image=self.img_zerocrystal)
-        self.img_setmax = rasterize("xray/setmax.svg", 2)
+        self.img_setmax = rasterize("xray", "setmax.svg", 2)
         b.get_object("SetMax").config(image=self.img_setmax)
-        self.img_turnon = rasterize("xray/turnon.svg", 2)
+        self.img_turnon = rasterize("xray", "turnon.svg", 2)
         b.get_object("Turnon").config(image=self.img_turnon)
-        self.img_save = rasterize("xray/save.svg")
+        self.img_save = rasterize("xray", "save.svg")
 
-        self.img_fastup = rasterize("xray/arrow-double-up.svg")
+        self.img_fastup = rasterize("xray", "arrow-double-up.svg")
         b.get_object("StepperFastUp_1").config(image=self.img_fastup)
         b.get_object("StepperFastUp_2").config(image=self.img_fastup)
-        self.img_slowup = rasterize("xray/arrow-single-up.svg")
+        self.img_slowup = rasterize("xray", "arrow-single-up.svg")
         b.get_object("StepperSlowUp_1").config(image=self.img_slowup)
         b.get_object("StepperSlowUp_2").config(image=self.img_slowup)
-        self.img_slowdown = rasterize("xray/arrow-single-down.svg")
+        self.img_slowdown = rasterize("xray", "arrow-single-down.svg")
         b.get_object("StepperSlowDown_1").config(image=self.img_slowdown)
         b.get_object("StepperSlowDown_2").config(image=self.img_slowdown)
-        self.img_fastdown = rasterize("xray/arrow-double-down.svg")
+        self.img_fastdown = rasterize("xray", "arrow-double-down.svg")
         b.get_object("StepperFastDown_1").config(image=self.img_fastdown)
         b.get_object("StepperFastDown_2").config(image=self.img_fastdown)
 
@@ -548,7 +546,7 @@ class MyApplication():
 
 
     def quit(self, event=None):
-        with open(path + "/xray.ini", "w") as configfile:
+        with open(os.path.join(path, "xray.ini"), "w") as configfile:
             config.write(configfile)
         if ser.is_open:
             ser.close()
@@ -648,26 +646,26 @@ def updateSerialCombo(self):
         ports.append(s.device)
     self.builder.get_object("SerialCombo").config(values=ports)
 
-def rasterize(vectorgraphic, scale=1):
-    svg = Parser.parse_file(os.path.join(imgpath, vectorgraphic))
+def rasterize(vectorpath, vectorgraphic, scale=1):
+    svg = Parser.parse_file(os.path.join(imgpath, vectorpath, vectorgraphic))
     rast = Rasterizer()
     buff = rast.rasterize(svg, int(svg.width * scale), int(svg.height * scale), scale)
     im = Image.frombytes("RGBA", (int(svg.width * scale), int(svg.height * scale)), buff)
     return ImageTk.PhotoImage(im)
 
 def loadPlotButtonIcons(self):
-    self.img_plot = rasterize("plot/plot.svg")
-    self.img_table = rasterize("plot/table.svg")
-    self.img_do_lambda = rasterize("plot/lambda.svg")
-    self.img_dont_lambda = rasterize("plot/theta.svg")
-    self.img_do_persecond = rasterize("plot/persecond.svg")
-    self.img_dont_persecond = rasterize("plot/pertime.svg")
-    self.img_do_subtractbackground = rasterize("plot/back.svg")
-    self.img_dont_subtractbackground = rasterize("plot/noback.svg")
-    self.img_do_smooth = rasterize("plot/smooth.svg")
-    self.img_dont_smooth = rasterize("plot/sharp.svg")
-    self.img_do_zoom = rasterize("plot/zoom.svg")
-    self.img_dont_zoom = rasterize("plot/nozoom.svg")
+    self.img_plot = rasterize("plot", "plot.svg")
+    self.img_table = rasterize("plot", "table.svg")
+    self.img_do_lambda = rasterize("plot", "lambda.svg")
+    self.img_dont_lambda = rasterize("plot", "theta.svg")
+    self.img_do_persecond = rasterize("plot", "persecond.svg")
+    self.img_dont_persecond = rasterize("plot", "pertime.svg")
+    self.img_do_subtractbackground = rasterize("plot", "back.svg")
+    self.img_dont_subtractbackground = rasterize("plot", "noback.svg")
+    self.img_do_smooth = rasterize("plot", "smooth.svg")
+    self.img_dont_smooth = rasterize("plot", "sharp.svg")
+    self.img_do_zoom = rasterize("plot", "zoom.svg")
+    self.img_dont_zoom = rasterize("plot", "nozoom.svg")
 
 def iconizePlotButtons(self):
     if do_lambda:
