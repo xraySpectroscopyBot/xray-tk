@@ -16,7 +16,7 @@ import numpy as np
 try:
     from scipy.interpolate import make_interp_spline
 except ImportError:
-    from scipy.interpolate import spline
+    pass
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg as FigureCanvas
 from svg import Parser, Rasterizer # pylint: disable=no-name-in-module,
@@ -806,14 +806,14 @@ def calculateValues(self):
     y = counts_normalized
 
     if do_smooth:
-        xinterpolated = np.linspace(x.min(), x.max(), 300)
         try:
+            xinterpolated = np.linspace(x.min(), x.max(), 300)
             spl = make_interp_spline(x, y, k=3)
             ysmoothed = spl(xinterpolated)
+            x = xinterpolated
+            y = ysmoothed
         except NameError:
-            ysmoothed = spline(x, y, xinterpolated)
-        x = xinterpolated
-        y = ysmoothed
+            pass
 
     return [x, y]
 
