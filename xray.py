@@ -297,7 +297,7 @@ class MyApplication():
             serialWrite(b'{"command":"position"}')
             data = json.loads(serialRead())
             config["Stepper"]["maximum"] = str(data["position"])
-            cmd = '{"command":"goto", "steps":-' + str(data["position"]) + ', "velocity":"2000"}'
+            cmd = '{"command":"goto", "steps":' + str(-data["position"]) + ', "velocity":"2000"}'
             serialWrite(cmd.encode("utf-8"))
         except json.decoder.JSONDecodeError:
             config["Stepper"]["maximum"] = "1"
