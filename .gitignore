@@ -1,7 +1,12 @@
 *.ini
 *.dat
 *.csv
-*.jpeg, *.jpg, *.png, *.svg
+*.jpeg
+*.jpg
+/*.png
+/*.svg
+*.pdf
 build
 dist
+release
 __pycache__
