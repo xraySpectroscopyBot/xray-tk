@@ -8,6 +8,7 @@ import csv
 import os
 import configparser
 import tkinter as tk
+import webbrowser
 import pygubu
 import serial
 from serial.tools.list_ports import comports
@@ -134,8 +135,17 @@ class MyApplication():
             def dialog_btnclose_clicked():
                 dialog.close()
 
+            def on_link_clicked(url):
+                webbrowser.open_new(url)
+
             btnclose = self.builder.get_object("About_Close")
             btnclose["command"] = dialog_btnclose_clicked
+
+            btnlink = self.builder.get_object("About_Link")
+            btnlink.bind("<Button-1>", lambda e: on_link_clicked("https://github.com/xraySpectroscopyBot/xray-tk"))
+
+            btnlicense = self.builder.get_object("About_License")
+            btnlicense.bind("<Button-1>", lambda e: on_link_clicked("https://creativecommons.org/publicdomain/zero/1.0/"))
 
             dialog.run()
         else:
