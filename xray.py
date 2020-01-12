@@ -634,7 +634,6 @@ def resetHints(self):
     self.builder.get_object("MaxAngle").delete(0, tk.END)
 
 def resetParameters(self):
-    self.builder.get_object("About_Text").delete(0, tk.END)
     self.builder.get_object("StepsizeEntry").delete(0, tk.END)
     self.builder.get_object("TimeEntry").delete(0, tk.END)
     self.builder.get_object("StartangleEntry").delete(0, tk.END)
