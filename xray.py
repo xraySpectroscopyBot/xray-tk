@@ -854,7 +854,7 @@ def drawTable(self, filename=""):
             csvwriter = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
             for i, _ in enumerate(x):
                 if do_lambda:
-                    csvwriter.writerow(["{:0.3e}".format(x[i]), str(y[i])])
+                    csvwriter.writerow(["{:0.5e}".format(x[i]), str(y[i])])
                 else:
                     csvwriter.writerow([str(x[i]), str(y[i])])
 
