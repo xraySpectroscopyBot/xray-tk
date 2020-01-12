@@ -151,6 +151,11 @@ class MyApplication():
         else:
             self.about_dialog.show()
 
+    def on_showhome_clicked(self):
+        if tk.messagebox.askyesno("Startbildschirm", "Wirklich zum Startbildschirm zurückkehren?"):
+            resetHints(self)
+            self.pages["ChooseSerial"].tkraise()
+
     def on_set_d_clicked(self):
         if self.d_dialog is None:
             dialog = self.builder.get_object("Window_set_d", self.mainwindow)
