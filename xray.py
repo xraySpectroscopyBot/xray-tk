@@ -518,8 +518,9 @@ class MyApplication():
         if do_plot:
             initialdir = os.path.join(path, "diagramm.png")
             title = "Diagramm speichern"
-            filetypes = (("Alle .png Dateien", "*.png"), ("Alle .jpeg Dateien", "*.jpg", "*.jpeg"),
-                         ("Alle .svg Dateien", "*.svg"), ("Alle Dateien", "*.*"))
+            filetypes = (("Alle .png Dateien", "*.png"), ("Alle .jpeg Dateien", ("*.jpg", "*.jpeg")),
+                         ("Alle .svg Dateien", "*.svg"), ("Alle .pdf Dateien", "*.pdf"),
+                         ("Alle Dateien", "*.*"))
         else:
             initialdir = os.path.join(path, "werte.csv")
             title = "Tabelle speichern"
@@ -535,6 +536,8 @@ class MyApplication():
             elif filepath[-4:] == ".jpg":
                 drawPlot(self, filepath)
             elif filepath[-5:] == ".jpeg":
+                drawPlot(self, filepath)
+            elif filepath[-4:] == ".pdf":
                 drawPlot(self, filepath)
             else:
                 drawPlot(self, filepath + ".png")
