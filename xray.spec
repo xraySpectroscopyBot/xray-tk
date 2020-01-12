@@ -3,13 +3,12 @@
 #Pack into single executable:
 onefile = True
 #Show console when launching executable
-console = True
+console = False
 
 
 hidden_imports = [
 #    'pygubu.builder.tkstdwidgets',
     'pygubu.builder.ttkstdwidgets',
-#    'pygubu.builder.widgets.dialog',
 #    'pygubu.builder.widgets.editabletreeview',
 #    'pygubu.builder.widgets.scrollbarhelper',
     'pygubu.builder.widgets.scrolledframe',
@@ -19,12 +18,15 @@ hidden_imports = [
     'pygubu.builder.widgets.combobox',
 	'pygubu.builder.widgets.dialog',
     'PIL._tkinter_finder',
+#	'scipy.interpolate',
+#	'_ufuncs'
+#	'scipy.interpolate.make_interp_spline',
 ]
 
 data_files = [
     ('xray.ui', '.'),
     ('images/xray/*.svg', 'images/xray'),
-    ('images/plot/*', 'images/plot'),
+    ('images/plot/*.svg', 'images/plot'),
 ]
 
 
@@ -57,7 +59,8 @@ if onefile:
               bootloader_ignore_signals=False,
               strip=False,
               upx=True,
-              console=console )
+              console=console,
+              icon='images/icon.ico' )
 else:
     exe = EXE(pyz,
               a.scripts,
@@ -68,7 +71,8 @@ else:
               bootloader_ignore_signals=False,
               strip=False,
               upx=True,
-              console=console )
+              console=console,
+              icon='images/icon.ico' )
     coll = COLLECT(exe,
                    a.binaries,
                    a.zipfiles,
