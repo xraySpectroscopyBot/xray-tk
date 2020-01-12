@@ -52,6 +52,9 @@ stepsperangle = -1
 measurementstotal = -1
 measure_time = -1
 d = -1
+d_lif = 201.4e-12
+d_nacl = 282.5e-12
+d_kabr = 329.0e-12
 
 do_plot = False
 do_lambda = False
@@ -171,6 +174,21 @@ class MyApplication():
                 d = abs(float(config["Crystal"]["d"]))
                 dialog.close()
 
+            def dialog_btn_lif_clicked():
+                entry_d = self.builder.get_object("D_Entry")
+                entry_d.delete(0, tk.END)
+                entry_d.insert(0, "{:0.5e}".format(d_lif))
+
+            def dialog_btn_nacl_clicked():
+                entry_d = self.builder.get_object("D_Entry")
+                entry_d.delete(0, tk.END)
+                entry_d.insert(0, "{:0.5e}".format(d_nacl))
+
+            def dialog_btn_kabr_clicked():
+                entry_d = self.builder.get_object("D_Entry")
+                entry_d.delete(0, tk.END)
+                entry_d.insert(0, "{:0.5e}".format(d_kabr))
+
             def validateFloat(value_new, value_old):
                 allowed = False
                 try:
@@ -205,11 +223,14 @@ class MyApplication():
 
             entry_d = self.builder.get_object("D_Entry")
             entry_d.delete(0, tk.END)
-            entry_d.insert(0, "{:0.3e}".format(d))
+            entry_d.insert(0, "{:0.5e}".format(d))
             entry_d["validatecommand"] = (entry_d.register(validateFloat), "%P", "%s")
             entry_d["validate"] = "key"
             btnclose = self.builder.get_object("Set_D_Button")
             btnclose["command"] = dialog_btnclose_clicked
+            self.builder.get_object("Set_LiF_Button")["command"] = dialog_btn_lif_clicked
+            self.builder.get_object("Set_NaCl_Button")["command"] = dialog_btn_nacl_clicked
+            self.builder.get_object("Set_KaBr_Button")["command"] = dialog_btn_kabr_clicked
 
             dialog.run()
         else:
@@ -370,7 +391,7 @@ class MyApplication():
                             if measure_time == 0:
                                 measure_time = 1
                             if d == 0:
-                                d = 201.4e-12
+                                d = d_lif
                             self.builder.get_object("ErrorLabelLoad").config(text="")
                             self.pages["Table"].tkraise()
                             drawTable(self)
@@ -743,7 +764,7 @@ def loadConstants(self):
         pass
     if not success:
         config["Crystal"] = {}
-        d = 201.4e-12
+        d = d_lif
         config["Crystal"]["d"] = str(d)
 
 def setSerialPort(self):
