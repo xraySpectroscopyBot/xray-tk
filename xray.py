@@ -215,29 +215,36 @@ class MyApplication():
         else:
             entry_d = self.builder.get_object("D_Entry")
             entry_d.delete(0, tk.END)
-            entry_d.insert(0, "{:0.3e}".format(d))
+            entry_d.insert(0, "{:0.5e}".format(d))
             self.d_dialog.show()
 
     def on_resetmax_clicked(self):
-        config["Stepper"] = {}
-        resetHints(self)
-        self.pages["ChooseSerial"].tkraise()
+        if tk.messagebox.askyesno("Maximum neu kalibrieren", "Wirklich zum Startbildschirm zurückkehren, "\
+                                    "um das Maximum neu zu kalibrieren?"):
+            config["Stepper"] = {}
+            resetHints(self)
+            self.pages["ChooseSerial"].tkraise()
 
     def on_reset_clicked(self):
-        global config
-        global do_plot, do_lambda, do_persecond, do_subtractbackground, do_smooth, do_zoom
-        os.remove(path + "/xray.ini")
-        config = configparser.ConfigParser()
-        config.read(path + "/xray.ini")
-        resetHints(self)
-        resetParameters(self)
-        do_plot = False
-        do_lambda = False
-        do_persecond = False
-        do_subtractbackground = False
-        do_smooth = False
-        do_zoom = False
-        self.pages["ChooseSerial"].tkraise()
+        if tk.messagebox.askyesno("Alle Einstellungen löschen", "Wirklich alle Einstellungen löschen "\
+                                    "und zum Startbildschirm zurückkehren?"):
+            global config
+            global do_plot, do_lambda, do_persecond, do_subtractbackground, do_smooth, do_zoom
+            try:
+                os.remove(os.path.join(path, "xray.ini"))
+            except FileNotFoundError:
+                pass
+            config = configparser.ConfigParser()
+            config.read(os.path.join(path, "xray.ini"))
+            resetHints(self)
+            resetParameters(self)
+            do_plot = False
+            do_lambda = False
+            do_persecond = False
+            do_subtractbackground = False
+            do_smooth = False
+            do_zoom = False
+            self.pages["ChooseSerial"].tkraise()
 
     def btn_ok1_clicked(self):
         serial_selected = None
