@@ -18,9 +18,24 @@ hidden_imports = [
     'pygubu.builder.widgets.combobox',
 	'pygubu.builder.widgets.dialog',
     'PIL._tkinter_finder',
+#	'scipy.special._ufuncs_cxx',
 #	'scipy.interpolate',
 #	'_ufuncs'
 #	'scipy.interpolate.make_interp_spline',
+#	'scipy.special._ufuncs_cxx',
+#	'scipy.linalg.cython_blas',
+#	'scipy.linalg.cython_lapack',
+#	'scipy.integrate',
+#	'scipy.integrate.quadrature',
+#	'scipy.integrate.odepack',
+#	'scipy.integrate._odepack',
+#	'scipy.integrate.quadpack',
+#	'scipy.integrate._quadpack',
+#	'scipy.integrate._ode',
+#	'scipy.integrate.vode',
+#	'scipy.integrate._dop',
+#	'scipy.integrate.lsoda',
+    'pkg_resources.py2_warn'
 ]
 
 data_files = [
