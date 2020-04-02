@@ -13,10 +13,7 @@ import pygubu
 import serial
 from serial.tools.list_ports import comports
 import numpy as np
-try:
-    from scipy.interpolate import make_interp_spline
-except ImportError:
-    pass
+from scipy.interpolate import make_interp_spline
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg as FigureCanvas
 from svg import Parser, Rasterizer # pylint: disable=no-name-in-module,
@@ -808,14 +805,11 @@ def calculateValues(self):
     y = counts_normalized
 
     if do_smooth:
-        try:
-            xinterpolated = np.linspace(x.min(), x.max(), 300)
-            spl = make_interp_spline(x, y, k=3)
-            ysmoothed = spl(xinterpolated)
-            x = xinterpolated
-            y = ysmoothed
-        except NameError:
-            pass
+        xinterpolated = np.linspace(x.min(), x.max(), 300)
+        spl = make_interp_spline(x, y, k=3)
+        ysmoothed = spl(xinterpolated)
+        x = xinterpolated
+        y = ysmoothed
 
     return [x, y]
 
