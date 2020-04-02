@@ -48,7 +48,7 @@ data_files = [
 block_cipher = None
 
 a = Analysis(['xray.py'],
-             pathex=['/home/falk/Schreibtisch/xray-windows/xray-tk'],
+             pathex=['.'],
              binaries=[],
              datas=data_files,
              hiddenimports=hidden_imports,
