@@ -1,0 +1,9 @@
+-r req-cython.txt
+tk
+pygubu
+pyserial
+numpy
+scipy
+matplotlib
+pynanosvg
+Pillow
