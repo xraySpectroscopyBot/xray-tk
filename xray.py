@@ -448,7 +448,7 @@ class MyApplication():
             do_persecond = True
             do_subtractbackground = True
             do_smooth = True
-            do_zoom = True
+            do_zoom = False
             drawPlot(self)
             self.pages["Plot"].tkraise()
         iconizePlotButtons(self)
