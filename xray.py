@@ -343,6 +343,8 @@ class MyApplication():
         if filepath == () or filepath == "":
             self.builder.get_object("ErrorLabelLoad").config(text="")
             return
+        if filepath[-4:] != ".dat":
+            filepath = filepath + ".dat"
         savefile = configparser.ConfigParser()
         savefile.read(filepath)
         savefile["Parameters"] = {}
