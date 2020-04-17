@@ -416,18 +416,10 @@ class MyApplication():
 
     def serialcombo_selected(self, event=None):
         success = False
-        if ser.is_open:
-            ser.close()
-        ser.port = self.builder.get_object("SerialCombo").current()
-        try:
-            ser.open()
-            ser.write(b'{"command":"ping"}')
-            if ser.readline() == b'pong\r\n':
-                success = True
-                self.builder.get_object("ErrorLabelSerial").config(text="")
-        except serial.SerialException:
-            pass
-        if not success:
+        openSerialPort(self.builder.get_object("SerialCombo").current())
+        if success:
+            self.builder.get_object("ErrorLabelSerial").config(text="")
+        else:
             self.builder.get_object("ErrorLabelSerial").config(text="Achtung: kein Arduino an ausgewähltem Port!")
             updateSerialCombo(self)
 
@@ -773,10 +765,25 @@ def setSerialPort(self):
             if str(s.vid) == config["Serial"]["vid"]:
                 if str(s.pid) == config["Serial"]["pid"]:
                     self.builder.get_object("SerialCombo").current(s.device)
+                    openSerialPort(s.device)
                     return
         self.builder.get_object("ErrorLabelSerial").config(text="Achtung: gespeicherter Arduino nicht gefunden!")
     except KeyError:
         pass
+
+def openSerialPort(device):
+    success = False
+    if ser.is_open:
+        ser.close()
+    ser.port = device
+    try:
+        ser.open()
+        ser.write(b'{"command":"ping"}')
+        if ser.readline() == b'pong\r\n':
+            success = True
+    except serial.SerialException:
+        pass
+    return success
 
 def calculateValues(self):
     background = int(counts[0])
