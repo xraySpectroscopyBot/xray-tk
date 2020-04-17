@@ -415,8 +415,7 @@ class MyApplication():
         serialWrite(b'{"command":"stop"}')
 
     def serialcombo_selected(self, event=None):
-        success = False
-        openSerialPort(self.builder.get_object("SerialCombo").current())
+        success = openSerialPort(self.builder.get_object("SerialCombo").current())
         if success:
             self.builder.get_object("ErrorLabelSerial").config(text="")
         else:
@@ -765,8 +764,11 @@ def setSerialPort(self):
             if str(s.vid) == config["Serial"]["vid"]:
                 if str(s.pid) == config["Serial"]["pid"]:
                     self.builder.get_object("SerialCombo").current(s.device)
-                    openSerialPort(s.device)
-                    return
+                    if openSerialPort(s.device):
+                        return
+                    else:
+                        self.builder.get_object("ErrorLabelSerial").config(text="Achtung: gespeicherter Arduino nicht gefunden!")
+                        return
         self.builder.get_object("ErrorLabelSerial").config(text="Achtung: gespeicherter Arduino nicht gefunden!")
     except KeyError:
         pass
